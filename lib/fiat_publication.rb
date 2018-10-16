@@ -1,5 +1,5 @@
 require "fiat_publication/engine"
 
 module FiatPublication
-  # Your code goes here...
+  # mattr_accessor :publisher_something
 end
