@@ -3,10 +3,11 @@ module FiatPublication
     include Tokenable
 
     belongs_to :publishable, polymorphic: true
-    belongs_to :publisher, through: :publishable
+    # belongs_to :publisher, through: :publishable
 
     enum block_type: {
-      text: 0
+      text: 0,
+      image: 1
     }
   end
 end
