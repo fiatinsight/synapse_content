@@ -2,16 +2,17 @@
   <%#= f.input :priority, as: :hidden, input_html: { value: 0 } %>
   <div class="row">
     <div class="col-12">
-      <h6><%= content_block.block_type.humanize %></h6>
-    </div>
-    <div class="col-12">
       <% if content_block.text? %>
-        <h1><%= content_block.token %></h1>
         <%= f.trix_editor :text_content, placeholder: "Type page content here..." %>
+      <% elsif content_block.image? %>
+        <% if content_block.image.attached? %>
+          <%= image_tag content_block.image.variant(resize: "500x500"), width: "100%", class: "mb-3" %>
+        <% end %>
+        <%= f.input :image, as: :file, label: "Upload image" %>
       <% end %>
     </div>
     <div class="col-12">
-      <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-save mr-2"></i>Save this block<% end %>
+      <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-save mr-2"></i>Save <%= content_block.block_type.humanize.downcase %><% end %>
     </div>
   </div>
 <% end %>

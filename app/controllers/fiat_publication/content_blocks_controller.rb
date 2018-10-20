@@ -50,7 +50,8 @@ module FiatPublication
       end
 
       def content_block_params
-        params.require(:content_block).permit(:publishable_type, :publishable_id, :block_type, :priority, :text_content)
+        params.require(:content_block).permit(:publishable_type, :publishable_id, :block_type, :priority, :text_content,
+                                              :image)
       end
 
   end

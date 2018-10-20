@@ -1,1 +1,7 @@
-<%= content_block.text_content %>
+<% if content_block.text? %>
+  <%= simple_format(content_block.text_content) %>
+<% elsif content_block.image? %>
+  <% if content_block.image.attached? %>
+    <%= image_tag content_block.image.variant(resize: "1200x1200"), width: "100%" %>
+  <% end %>
+<% end %>
