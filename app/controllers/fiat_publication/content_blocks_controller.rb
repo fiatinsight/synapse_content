@@ -39,7 +39,7 @@ module FiatPublication
       @content_block.destroy
 
       respond_to do |format|
-        format.html { redirect_to account_parish_content_blocks_path(@content_block.parish), notice: 'ContentBlock was successfully deleted.' }
+        format.html { redirect_back(fallback_location: content_blocks_path, notice: 'Block was removed.') }
       end
     end
 

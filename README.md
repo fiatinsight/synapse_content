@@ -90,7 +90,7 @@ Displaying content just requires that you use the typical associations. For exam
 
 ```ruby
 @page.fiat_publication_content_blocks.each do |i|
-  = render partial: 'fiat_publication/content_blocks/show', locals: { content_block: i }
+  = render partial: 'fiat_publication/content_blocks/show', locals: { content_block: i, my_classes: 'custom_classes_here' }
 end
 ```
 
