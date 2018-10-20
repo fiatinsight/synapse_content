@@ -5,6 +5,7 @@ class CreateFiatPublicationContentBlocks < ActiveRecord::Migration[5.2]
       t.integer :publishable_id
       t.integer :block_type
       t.string :token
+      t.integer :text_content
       # TODO: Add all the various fields you can use...
 
       t.timestamps

@@ -28,7 +28,7 @@ module FiatPublication
     def update
       respond_to do |format|
         if @content_block.update_attributes(content_block_params)
-          format.html { redirect_back(fallback_location: edit_account_content_block_path(@content_block), notice: 'ContentBlock successfully updated.') }
+          format.html { redirect_back(fallback_location: content_blocks_path, notice: 'Block successfully updated.') }
         else
           format.html { render action: "edit" }
         end
@@ -50,7 +50,7 @@ module FiatPublication
       end
 
       def content_block_params
-        params.require(:content_block).permit(:publishable_type, :publishable_id, :block_type, :priority)
+        params.require(:content_block).permit(:publishable_type, :publishable_id, :block_type, :priority, :text_content)
       end
 
   end
