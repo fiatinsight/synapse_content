@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Dependencies
 
-The gem is designed to supply minimally formatted output so that you can influence designs within your main application. It requires [trix-rails](https://github.com/kylefox/trix) and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern for models to handle tokenization. It assumes (but doesn't require) that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui).
+The gem is designed to supply minimally formatted output so that you can influence designs within your main application. It requires [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern for models to handle tokenization. It assumes (but doesn't require) that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui).
 
 ## Setup
 
@@ -79,7 +79,14 @@ Depending on where you mount the engine, routing to its resources will work diff
 link_to "New block", account_fiat_publication.new_content_block_path(publishable_type: "Page", publishable_id: @page.id)
 ```
 
-Displaying content just requires that you use the usual associations. For example, if you wanted to display the default partial for a content block provided by `fiat_publication` you could put:
+In this case, updating content would require passing in the full namespace so that `fiat_publication` can handle a nested path helper in its forms:
+
+```ruby
+content_block = FiatPublication::ContentBlock.find(your_content_block_id)
+= render partial: 'fiat_publication/content_blocks/form', locals: { content_block: content_block, url: account_fiat_publication.content_block_path(content_block) }
+```
+
+Displaying content just requires that you use the typical associations. For example, if you wanted to display the default partial for a content block provided by `fiat_publication` you could put:
 
 ```ruby
 @page.fiat_publication_content_blocks.each do |i|
