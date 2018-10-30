@@ -1,6 +1,6 @@
-class CreateFiatPublicationContentBlocks < ActiveRecord::Migration[5.2]
+class CreateFiContentBlocks < ActiveRecord::Migration[5.2]
   def change
-    create_table :fiat_publication_content_blocks do |t|
+    create_table :fi_content_blocks do |t|
       t.string :publishable_type
       t.integer :publishable_id
       t.integer :block_type
