@@ -1,7 +1,7 @@
 module FiatPublication
   class MessagesController < ActionController::Base
     # include ActionView::Helpers::TextHelper
-    before_action :set_message, only: [:show, :edit, :update, :destroy]
+    # before_action :set_message, only: [:show, :edit, :update, :destroy]
 
     def index
       @messages = Message.all
@@ -9,10 +9,6 @@ module FiatPublication
 
     def new
       @message = Message.new
-
-      respond_to do |format|
-        format.html # new.html.erb
-      end
     end
 
     def create
@@ -40,10 +36,6 @@ module FiatPublication
       end
     end
 
-    def preview
-      @message = Message.find(params[:id])
-    end
-
     def destroy
       @message.destroy
 
@@ -54,12 +46,12 @@ module FiatPublication
 
     private
 
-      def set_message
-        @message = Current.publisher.messages.find(params[:id])
-      end
+      # def set_message
+      #   @message = Current.publisher.messages.find(params[:id])
+      # end
 
       def message_params
-        params.require(:message).permit(:publisher_id, :title, :content, :slug, :image, :excerpt, :image_placement)
+        params.require(:message).permit(:subject, :body)
       end
 
   end
