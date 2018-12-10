@@ -67,6 +67,14 @@ class Organization < ApplicationRecord
 end
 ```
 
+### Messages
+
+Messages are threaded, extendable content objects, similar to email threads.
+
+### Comments
+
+Comments can be added to other content objects using the `commentable` polymorphic association.
+
 ### Authors
 
 Forthcoming...

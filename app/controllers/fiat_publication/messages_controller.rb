@@ -9,6 +9,10 @@ module FiatPublication
 
     def new
       @message = Message.new
+
+      respond_to do |format|
+        format.html # new.html.erb
+      end
     end
 
     def create

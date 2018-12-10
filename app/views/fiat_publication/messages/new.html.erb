@@ -1,0 +1,12 @@
+<%= simple_form_for [FiatPublication::Message.new] do |f| %>
+  <div class="row">
+    <div class="col-12">
+      <p class="desc">Write a message</p>
+    </div>
+    <%= f.input :subject, label: false, wrapper_html: { class: 'col-12' } %>
+    <%= f.input :body, label: false, wrapper_html: { class: 'col-12' } %>
+    <div class="col-12">
+      <%= f.button :button, type: :submit, class: 'btn btn-secondary' do %>Create message<% end %>
+    </div>
+  </div>
+<% end %>
