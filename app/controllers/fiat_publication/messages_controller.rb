@@ -1,7 +1,7 @@
 module FiatPublication
   class MessagesController < ActionController::Base
     # include ActionView::Helpers::TextHelper
-    # before_action :set_message, only: [:show, :edit, :update, :destroy]
+    before_action :set_message, only: [:show, :edit, :update, :destroy]
 
     def index
       @messages = Message.all
@@ -12,11 +12,11 @@ module FiatPublication
     end
 
     def create
-      @message = Current.publisher.messages.create(message_params)
+      @message = Message.create(message_params)
 
       respond_to do |format|
         if @message.save
-          format.html { redirect_to edit_account_message_path(@message), notice: 'Message successfully saved.' }
+          format.html { redirect_back(fallback_location: messages_path, notice: 'Message was created.') }
         else
           format.html { render action: "new" }
         end
@@ -46,9 +46,9 @@ module FiatPublication
 
     private
 
-      # def set_message
-      #   @message = Current.publisher.messages.find(params[:id])
-      # end
+      def set_message
+        @message = Message.find(params[:id])
+      end
 
       def message_params
         params.require(:message).permit(:subject, :body)

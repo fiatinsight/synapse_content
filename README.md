@@ -87,7 +87,7 @@ Depending on where you mount the engine, routing to its resources will work diff
 link_to "New block", account_fiat_publication.new_content_block_path(publishable_type: "Page", publishable_id: @page.id)
 ```
 
-In this case, updating content would require passing in the full namespace so that `fiat_publication` can handle a nested path helper in its forms:
+In this case, updating content would require passing in the full namespace so that `fiat_publication` can handle a nested path helper in its forms. That means including the object you want to work with, e.g., setting a `content_block` variable, as well as the `url` variable of the path you want to work with:
 
 ```ruby
 content_block = FiatPublication::ContentBlock.find(your_content_block_id)
