@@ -50,7 +50,7 @@ Create an initializer at `config/initializers/fiat_publication.rb` to set any re
 FiatPublication.new_content_block_redirect_path = "content_block_path"
 ```
 
-There's more discussion of initializer variables under [Routing](https://github.com/fiatinsight/fiat_publication/blob/master/readme.md#routing), below.
+There's more discussion of initializer variables under [Routing](https://github.com/fiatinsight/fiat_publication#routing), below.
 
 ## Content
 
