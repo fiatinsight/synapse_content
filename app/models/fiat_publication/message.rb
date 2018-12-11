@@ -12,6 +12,10 @@ module FiatPublication
     # has_many :tasks, :dependent => :destroy
     # has_many :feeds, as: :trackable, :dependent => :destroy
 
+    validates :subject, presence: true
+    validates :body, presence: true
+    validates :authorable, presence: true
+
     # enum label: {
     #   prospect: 0,
     #   ticket: 1,

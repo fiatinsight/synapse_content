@@ -54,7 +54,7 @@ module FiatPublication
       end
 
       def message_params
-        params.require(:message).permit(:subject, :body)
+        params.require(:message).permit(:subject, :body, :authorable_type, :authorable_id)
       end
 
   end
