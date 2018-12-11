@@ -6,5 +6,7 @@ module FiatPublication
 
     belongs_to :publisher, polymorphic: true
     has_many :content_blocks, as: :publishable
+
+    validates :title, presence: true
   end
 end

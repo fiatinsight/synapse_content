@@ -13,11 +13,11 @@ module FiatPublication
     end
 
     def create
-      @page = Current.publisher.pages.create(page_params)
+      @page = Page.create(page_params)
 
       respond_to do |format|
         if @page.save
-          format.html { redirect_to edit_account_page_path(@page), notice: 'Page successfully saved.' }
+          format.html { redirect_to main_app.send(FiatPublication.new_page_redirect_path, @page), notice: 'Page was created.' }
         else
           format.html { render action: "new" }
         end
@@ -52,11 +52,11 @@ module FiatPublication
     private
 
       def set_page
-        @page = Current.publisher.pages.find(params[:id])
+        @page = Page.find(params[:id])
       end
 
       def page_params
-        params.require(:page).permit(:publisher_id, :title, :content, :slug, :image, :excerpt, :image_placement)
+        params.require(:page).permit(:publisher_id, :title, :slug, :image, :excerpt, :image_placement)
       end
 
   end
