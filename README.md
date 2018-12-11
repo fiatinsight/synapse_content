@@ -44,6 +44,14 @@ namespace :account do
 end
 ```
 
+Create an initializer at `config/initializers/fiat_publication.rb` to set any required global variables for your implementation. By default, the gem will supply its own variables, and you can add only the ones you need based on your usage. For example:
+
+```ruby
+FiatPublication.new_content_block_redirect_path = "content_block_path"
+```
+
+There's more discussion of initializer variables under [Routing](https://github.com/fiatinsight/fiat_publication/blob/master/readme.md#routing), below.
+
 ## Content
 
 ### Pages and articles
@@ -109,6 +117,12 @@ Displaying content just requires that you use the typical associations. For exam
 @page.fiat_publication_content_blocks.each do |i|
   = render partial: 'fiat_publication/content_blocks/show', locals: { content_block: i, my_classes: 'custom_classes_here' }
 end
+```
+
+If you want to display content from the gem within your main app view structure, you'll need to make sure to create a parallel set of routes in your application. These should be relative to the namespace(s) you want to use. You'll need to add variables to your initializer file to tell the gem how to handle redirects for different content types. For example, with the `account` namespace, you might set:
+
+```ruby
+FiatPublication.new_content_block_redirect_path = "account_content_block_path"
 ```
 
 ## Development
