@@ -12,15 +12,18 @@ module FiatPublication
     end
 
     def create
-      @comment = Current.publisher.comments.create(comment_params)
+      @comment = Comment.create(comment_params)
 
       respond_to do |format|
         if @comment.save
-          format.html { redirect_to edit_account_comment_path(@comment), notice: 'Comment successfully saved.' }
+          format.html { redirect_back(fallback_location: main_app.send(FiatPublication.new_comment_redirect_path, @comment), notice: 'Comment was created.') }
         else
           format.html { render action: "new" }
         end
       end
+    end
+
+    def show
     end
 
     def edit
@@ -36,10 +39,6 @@ module FiatPublication
       end
     end
 
-    def preview
-      @comment = Comment.find(params[:id])
-    end
-
     def destroy
       @comment.destroy
 
@@ -51,11 +50,11 @@ module FiatPublication
     private
 
       def set_comment
-        @comment = Current.publisher.comments.find(params[:id])
+        @comment = Comment.find(params[:id])
       end
 
       def comment_params
-        params.require(:comment).permit(:publisher_id, :title, :content, :slug, :image, :excerpt, :image_placement)
+        params.require(:comment).permit(:body, :authorable_type, :authorable_id, :commentable_type, :commentable_id)
       end
 
   end

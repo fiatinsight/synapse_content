@@ -8,6 +8,10 @@ module FiatPublication
     belongs_to :authorable, polymorphic: true
     belongs_to :commentable, polymorphic: true, touch: true
 
+    validates :authorable, presence: true
+    validates :commentable, presence: true
+    validates :body, presence: true
+
     # enum interaction: {
     #   email: 0,
     #   phone_call: 1,

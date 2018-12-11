@@ -1,0 +1,12 @@
+<%= simple_form_for comment, url: url do |f| %>
+  <%= f.input :authorable_type, as: :hidden, input_html: { value: authorable_type } %>
+  <%= f.input :authorable_id, as: :hidden, input_html: { value: authorable_id } %>
+  <%= f.input :commentable_type, as: :hidden, input_html: { value: commentable_type } %>
+  <%= f.input :commentable_id, as: :hidden, input_html: { value: commentable_id } %>
+  <div class="row">
+    <%= f.input :body, label: false, wrapper_html: { class: 'col-12' } %>
+    <div class="col-12">
+      <%= f.button :button, type: :submit, class: 'btn btn-secondary' do %>Publish comment<% end %>
+    </div>
+  </div>
+<% end %>
