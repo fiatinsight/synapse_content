@@ -30,7 +30,7 @@
           <% end %>
           <%= f.input :image, as: :file, label: "Upload image" %>
         <% end %>
-        <%= link_to page, method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
+        <%= link_to manage_fiat_publication.pages_path, method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
           <i class="far fa-trash mr-2"></i>Delete this page
         <% end %>
       </div>
