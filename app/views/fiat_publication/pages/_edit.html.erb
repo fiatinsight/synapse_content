@@ -10,16 +10,16 @@
             <div class="sheet p-5 mb-3 bg-white layer-0">
               <% content_block = ContentBlock.find(i.id) %>
               <%= render partial: 'content_blocks/form', locals: { content_block: content_block, url: content_block_path(content_block) } %>
-              <%= link_to content_block_path(content_block), method: :delete, data: { confirm: "Are you sure you want to remove this block?" }, style: "float: right;" do %><i class="far fa-trash"></i><% end %>
+              <%= link_to send("#{path_prefix}.content_block_path", content_block), method: :delete, data: { confirm: "Are you sure you want to remove this block?" }, style: "float: right;" do %><i class="far fa-trash"></i><% end %>
             </div>
           <% end %>
         <% else %>
           <p class="desc"><i class="far fa-info-circle mr-2"></i>To add content to this page, create a new content block, below.</p>
         <% end %>
-        <%= link_to new_content_block_path(publishable_type: "Page", publishable_id: page.id), remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<% end %>
+        <%= link_to send("#{path_prefix}.new_content_block_path", publishable_type: "Page", publishable_id: page.id), remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<% end %>
       </div>
       <div class="col-lg-4 my-2 py-5 pl-5 layer-0">
-        <%= simple_form_for page, url: url do |f| %>
+        <%= simple_form_for page, url: send("#{path_prefix}.pages_path") do |f| %>
           <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-5" do %><i class="far fa-check mr-2"></i>Save page<% end %>
           <%= f.input :excerpt, placeholder: "Add a short description (10 to 20 words)" %>
           <%= f.input :slug, placeholder: "page-slug" %>
@@ -30,7 +30,7 @@
           <% end %>
           <%= f.input :image, as: :file, label: "Upload image" %>
         <% end %>
-        <%= link_to url, method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
+        <%= link_to send("#{path_prefix}.pages_path"), method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
           <i class="far fa-trash mr-2"></i>Delete this page
         <% end %>
       </div>
