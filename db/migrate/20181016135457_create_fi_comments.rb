@@ -4,7 +4,7 @@ class CreateFiComments < ActiveRecord::Migration[5.2]
       t.string :publisher_type
       t.integer :publisher_id
       t.string :token
-      t.integer :commentable_type
+      t.string :commentable_type
       t.integer :commentable_id
       t.text :body
       t.string :authorable_type
