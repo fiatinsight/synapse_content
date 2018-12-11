@@ -94,6 +94,13 @@ content_block = FiatPublication::ContentBlock.find(your_content_block_id)
 = render partial: 'fiat_publication/content_blocks/form', locals: { content_block: content_block, url: account_fiat_publication.content_block_path(content_block) }
 ```
 
+Creating a new entry would take similar arguments:
+
+```ruby
+= render partial: 'fiat_publication/content_block/new', locals: { message: FiatPublication::ContentBlock.new, url: account_fiat_publication.content_blocks_path }
+# Note the use of content_blocks_path and not new_content_block_path
+```
+
 Displaying content just requires that you use the typical associations. For example, if you wanted to display the default partial for a content block provided by `fiat_publication` you could put:
 
 ```ruby
