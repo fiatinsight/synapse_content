@@ -19,7 +19,7 @@
         <%#= link_to send("#{path_prefix}.new_content_block_path", publishable_type: "Page", publishable_id: page.id), remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<%# end %>
       </div>
       <div class="col-lg-4 my-2 py-5 pl-5 layer-0">
-        <%= simple_form_for page, url: "#{path_prefix}.pages_path".to_path do |f| %>
+        <%= simple_form_for page, url: polymorphic_url([:manage, page]) do |f| %>
           <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-5" do %><i class="far fa-check mr-2"></i>Save page<% end %>
           <%= f.input :excerpt, placeholder: "Add a short description (10 to 20 words)" %>
           <%= f.input :slug, placeholder: "page-slug" %>
