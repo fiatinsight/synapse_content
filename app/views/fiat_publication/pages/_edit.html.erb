@@ -16,7 +16,7 @@
         <% else %>
           <p class="desc"><i class="far fa-info-circle mr-2"></i>To add content to this page, create a new content block, below.</p>
         <% end %>
-        <%= link_to new_content_block_path(publishable_type: "Page", publishable_id: @page.id), remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<% end %>
+        <%= link_to new_content_block_path(publishable_type: "Page", publishable_id: page.id), remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<% end %>
       </div>
       <div class="col-lg-4 my-2 py-5 pl-5 layer-0">
         <%= simple_form_for page do |f| %>
