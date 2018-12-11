@@ -16,7 +16,7 @@ module FiatPublication
 
       respond_to do |format|
         if @comment.save
-          format.html { redirect_back(fallback_location: @comment, notice: 'Comment was created.') }
+          format.html { redirect_back(fallback_location: @comment, notice: 'Your comment has been published.') }
         else
           format.html { render action: "new" }
         end
