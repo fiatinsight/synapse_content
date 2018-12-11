@@ -44,26 +44,28 @@ namespace :account do
 end
 ```
 
-### Content blocks
-
-Content blocks are granular elements used to build publications. By default, they belong to a polymorphic `publishable` object. You can use any model(s) in your app as `publishable`. To associate content blocks with your object(s), for example with a page, include the following on your model:
-
-```ruby
-class Page < ApplicationRecord
-  # ...
-  has_many :fiat_publication_content_blocks, as: :publishable, class_name: 'FiatPublication::ContentBlock'
-end
-```
+## Content
 
 ### Pages and articles
 
-Pages and articles are available through the engine, too. They belong to a polymorphic `publisher` object. You can use any model(s) in your app for this (e.g., organizations, accounts, etc.). For example:
+Pages and articles are basic content types available through the engine. They belong to a polymorphic `publisher` object. You can use any model(s) in your app for this (e.g., organizations, accounts, etc.). For example:
 
 ```ruby
 class Organization < ApplicationRecord
   # ...
   has_many :fiat_publication_pages, as: :publisher, class_name: 'FiatPublication::Page'
   has_many :fiat_publication_articles, as: :publisher, class_name: 'FiatPublication::Article'
+end
+```
+
+### Content blocks
+
+Content blocks are granular elements used to build pages and articles. By default, they belong to a polymorphic `publishable` object. You can use any model(s) in your app as `publishable`. To associate content blocks with your object(s), for example with a page, include the following on your model:
+
+```ruby
+class Page < ApplicationRecord
+  # ...
+  has_many :fiat_publication_content_blocks, as: :publishable, class_name: 'FiatPublication::ContentBlock'
 end
 ```
 
@@ -79,7 +81,7 @@ Comments can be added to other content objects using the `commentable` polymorph
 
 Forthcoming...
 
-### Routing
+## Routing
 
 Depending on where you mount the engine, routing to its resources will work differently. For example, within an `account` namespace, a new content block could be created using something like:
 
