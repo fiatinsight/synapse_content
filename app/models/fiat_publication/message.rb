@@ -14,8 +14,7 @@ module FiatPublication
 
     validates :subject, presence: true
     validates :body, presence: true
-    validates :authorable_type, presence: true
-    validates :authorable_id, presence: true
+    validates :authorable, presence: true
 
     # enum label: {
     #   prospect: 0,

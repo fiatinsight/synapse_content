@@ -1,6 +1,6 @@
 <%= simple_form_for message, url: url do |f| %>
-  <%= f.input :authorable_type, as: :hidden, input_html: { value: params[:authorable_type] } %>
-  <%= f.input :authorable_id, as: :hidden, input_html: { value: params[:authorable_id] } %>
+  <%= f.input :authorable_type, as: :hidden, input_html: { value: authorable_type } %>
+  <%= f.input :authorable_id, as: :hidden, input_html: { value: authorable_id } %>
   <div class="row">
     <%= f.input :subject, label: false, wrapper_html: { class: 'col-12' } %>
     <%= f.input :body, label: false, wrapper_html: { class: 'col-12' } %>
