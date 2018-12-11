@@ -16,7 +16,7 @@ module FiatPublication
 
       respond_to do |format|
         if @message.save
-          format.html { redirect_to main_app.url_for(@message), notice: 'Message was created.' }
+          format.html { redirect_to main_app.message_path(@message.id), notice: 'Message was created.' }
         else
           format.html { render action: "new" }
         end
