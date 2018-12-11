@@ -17,9 +17,6 @@
             <%= f.input :image_placement, as: :hidden, input_html: { value: :billboard } %>
             <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-3 mr-3" do %><i class="far fa-check mr-2"></i>Create this page<% end %>
           <% end %>
-          <% if page.content? %>
-            <%= f.trix_editor :content, placeholder: "Type page content here..." %>
-          <% end %>
         </div>
       </div>
     <% end %>
