@@ -24,8 +24,8 @@
           <%= f.input :excerpt, placeholder: "Add a short description (10 to 20 words)" %>
           <%= f.input :slug, placeholder: "page-slug" %>
           <p class="desc"><i class="far fa-image mr-2"></i>Add a featured image. Images should be at least 1500x800 pixels. This is the crop ratio.</p>
-          <% if @page.image.attached? %>
-            <%= image_tag @page.image.variant(resize: "500x500"), width: "100%", style: "max-width: 500px;", class: "mb-3" %>
+          <% if page.image.attached? %>
+            <%= image_tag page.image.variant(resize: "500x500"), width: "100%", style: "max-width: 500px;", class: "mb-3" %>
             <%= f.input :image_placement, collection: Page.image_placements.keys.map { |w| [w.humanize, w] }, input_html: { class: 'chosen-select' }, prompt: "Select placement" %>
           <% end %>
           <%= f.input :image, as: :file, label: "Upload image" %>

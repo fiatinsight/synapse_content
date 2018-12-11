@@ -7,6 +7,13 @@ module FiatPublication
     belongs_to :publisher, polymorphic: true
     has_many :content_blocks, as: :publishable
 
+    has_one_attached :image
+
     validates :title, presence: true
+
+    enum image_placement: {
+      billboard: 0,
+      right: 1
+    }, _prefix: :image
   end
 end

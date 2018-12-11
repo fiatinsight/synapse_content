@@ -6,6 +6,8 @@ class CreateFiPages < ActiveRecord::Migration[5.2]
       t.string :slug
       t.string :token
       t.string :title
+      t.text :excerpt
+      t.integer :image_placement
 
       t.timestamps
     end
