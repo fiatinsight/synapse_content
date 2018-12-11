@@ -1,0 +1,8 @@
+<%= simple_form_for page, url: url do |f| %>
+  <div class="row">
+    <%= f.input :title, label: false, wrapper_html: { class: 'col-12' } %>
+    <div class="col-12">
+      <%= f.button :button, type: :submit, class: btn_classes do %>Create page<% end %>
+    </div>
+  </div>
+<% end %>
