@@ -30,7 +30,7 @@ module FiatPublication
     def update
       respond_to do |format|
         if @page.update_attributes(page_params)
-          format.html { redirect_back(fallback_location: edit_account_page_path(@page), notice: 'Page successfully updated.') }
+          format.html { redirect_back(fallback_location: page_path(@page), notice: 'Page successfully updated.') }
         else
           format.html { render action: "edit" }
         end
