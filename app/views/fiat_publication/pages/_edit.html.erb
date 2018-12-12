@@ -26,7 +26,7 @@
           <% page.content_blocks.each do |i| %>
             <div class="sheet p-5 mb-3 bg-white layer-0">
               <% content_block = FiatPublication::ContentBlock.find(i.id) %>
-              <%= render partial: 'content_blocks/form', locals: { content_block: content_block, url: content_block_path(content_block) } %>
+              <%= render partial: 'content_blocks/form', locals: { content_block: content_block, url: content_block_url } %>
               <%= link_to content_block_url, method: :delete, data: { confirm: "Are you sure you want to remove this block?" }, style: "float: right;" do %><i class="far fa-trash"></i><% end %>
             </div>
           <% end %>
