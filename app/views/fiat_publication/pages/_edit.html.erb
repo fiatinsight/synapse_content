@@ -33,7 +33,7 @@
         <% else %>
           <p class="desc"><i class="far fa-info-circle mr-2"></i>To add content to this page, create a new content block, below.</p>
         <% end %>
-        <%#= link_to send("#{path_prefix}.new_content_block_path", publishable_type: "Page", publishable_id: page.id), remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<%# end %>
+        <%= link_to new_content_block_url, publishable_type: "Page", publishable_id: page.id), remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<%# end %>
       </div>
       <div class="col-lg-4 my-2 py-5 pl-5 layer-0">
         <%= simple_form_for page, url: page_update_url do |f| %>
@@ -47,7 +47,7 @@
           <% end %>
           <%= f.input :image, as: :file, label: "Upload image" %>
         <% end %>
-        <%#= link_to send("#{path_prefix}.pages_path", page), method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
+        <%= link_to page_update_url, method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
           <i class="far fa-trash mr-2"></i>Delete this page
         <%# end %>
       </div>
