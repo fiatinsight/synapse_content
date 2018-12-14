@@ -6,7 +6,6 @@ class CreateFiContentBlocks < ActiveRecord::Migration[5.2]
       t.integer :block_type
       t.string :token
       t.text :text_content
-      # TODO: Add all the various fields you can use...
 
       t.timestamps
     end

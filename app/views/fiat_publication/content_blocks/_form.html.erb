@@ -9,6 +9,15 @@
           <%= image_tag content_block.image.variant(resize: "500x500"), width: "100%", class: "mb-3" %>
         <% end %>
         <%= f.input :image, as: :file, label: "Upload image" %>
+      <% elsif content_block.buttons? %>
+        <div class="row">
+          <%= f.input :button_title_1, label: "Button Title (1)", wrapper_html: { class: 'col-lg-4' } %>
+          <%= f.input :button_title_2, label: "Button Title (2)", wrapper_html: { class: 'col-lg-4' } %>
+          <%= f.input :button_title_3, label: "Button Title (3)", wrapper_html: { class: 'col-lg-4' } %>
+          <%= f.input :button_link_1, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
+          <%= f.input :button_link_2, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
+          <%= f.input :button_link_3, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
+        </div>
       <% end %>
     </div>
     <div class="col-12">
