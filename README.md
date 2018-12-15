@@ -119,11 +119,25 @@ Displaying content just requires that you use the typical associations. For exam
 end
 ```
 
-If you want to display content from the gem within your main app view structure, you'll need to make sure to create a parallel set of routes in your application. These should be relative to the namespace(s) you want to use. You'll need to add variables to your initializer file to tell the gem how to handle redirects for different content types. For example, with the `account` namespace, you might set:
+## Customization
+
+You can use the gem resources directly, or wrap them into custom namespaces, views, and controller logic within your main app. For example, after mounting it within a namespace called `account`, you could create a series of controllers under your `AccountController` to handle provided resources, e.g., `Account::PagesController` or `Account::ArticlesController`. You can do this for some resources or all of them. Make sure to create routes for each resource type you want to handle:
+
+```ruby
+namespace :account do
+  mount FiatPublication::Engine => "/publication"
+  resources :pages
+  resources :articles
+end
+```
+
+You'll also need to add variables to your initializer file to tell the gem how to handle redirects for different content types. For example, with the `account` namespace, you might set:
 
 ```ruby
 FiatPublication.new_content_block_redirect_path = "account_content_block_path"
 ```
+
+The gem will provide arguments for your paths based on the resource type. But it can't pick up the namespace conventions you set in your main app without a little help.
 
 ## Development
 
