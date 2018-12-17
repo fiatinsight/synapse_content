@@ -83,6 +83,7 @@ locals = {
   new_content_block_url: account_fiat_publication.new_content_block_path(publishable_type: 'FiatPublication::Page', publishable_id: params[:id]),
   content_block_path: '/account/publication/content_blocks',
   btn_classes: 'btn btn-success layer-1',
+  nested_parent_id: nil, # Identify a parent resource in a nested setup
   publisher_type: nil,
   publisher_id: nil
   }

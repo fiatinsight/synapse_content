@@ -6,7 +6,7 @@
           <% if action_name == "edit" %>
             <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-3 mr-3" do %><i class="far fa-check mr-2"></i>Save page<% end %>
             <%= link_to send("#{FiatPublication.view_page_path}"), target: "_blank", class: "btn btn-link mb-3" do %><i class="far fa-external-link mr-2"></i>View page<% end %>
-            <%= link_to send("#{FiatPublication.new_page_path}", publisher_id, publisher_type: publisher_type, publisher_id: publisher_id), class: "btn btn-link mb-3" do %><i class="far fa-plus mr-2"></i>New page<% end %>
+            <%= link_to send("#{FiatPublication.new_page_path}", nested_parent_id, publisher_type: publisher_type, publisher_id: publisher_id), class: "btn btn-link mb-3" do %><i class="far fa-plus mr-2"></i>New page<% end %>
           <% end %>
         </div>
       </div>
