@@ -54,17 +54,45 @@ There's more discussion of initializer variables under [Routing](https://github.
 
 ## Content
 
-### Pages and articles
+### Publishers
 
-Pages and articles are basic content types available through the engine. They belong to a polymorphic `publisher` object. You can use any model(s) in your app for this (e.g., organizations, accounts, etc.). For example:
+Content can optionally be assigned to a polymorphic `publisher` from your main app. This can also be omitted, in case there's only one content creator (e.g., in a simple, non-scaled application). You can listen for `publisher` content on any model(s) you want:
 
 ```ruby
 class Organization < ApplicationRecord
   # ...
-  has_many :fiat_publication_pages, as: :publisher, class_name: 'FiatPublication::Page'
-  has_many :fiat_publication_articles, as: :publisher, class_name: 'FiatPublication::Article'
+  has_many :fi_pages, as: :publisher, class_name: 'FiatPublication::Page'
+  has_many :fi_articles, as: :publisher, class_name: 'FiatPublication::Article'
 end
 ```
+
+### Pages
+
+Pages are basic content types available through the engine. The gem offers form views for creating and editing pages. To create a new page, you can just put:
+
+```ruby
+= link_to send("#{FiatPublication.new_page_path}", publisher_type: nil, publisher_id: nil)
+```
+
+Editing a page requires a little more information. Create a view partial with the following information:
+
+```ruby
+locals = {
+  page: FiatPublication::Page.find(params[:id]),
+  page_update_url: account_fiat_publication.page_path,
+  new_content_block_url: account_fiat_publication.new_content_block_path(publishable_type: 'FiatPublication::Page', publishable_id: params[:id]),
+  content_block_path: '/account/publication/content_blocks',
+  btn_classes: 'btn btn-success layer-1',
+  publisher_type: nil,
+  publisher_id: nil
+  }
+
+= render partial: 'fiat_publication/pages/edit', locals: locals
+```
+
+### Articles
+
+Documentation forthcoming...
 
 ### Content blocks
 
@@ -87,7 +115,7 @@ Comments can be added to other content objects using the `commentable` polymorph
 
 ### Authors
 
-Forthcoming...
+Documentation forthcoming...
 
 ## Routing
 
