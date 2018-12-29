@@ -2,8 +2,8 @@
   <%= f.input :authorable_type, as: :hidden, input_html: { value: authorable_type } %>
   <%= f.input :authorable_id, as: :hidden, input_html: { value: authorable_id } %>
   <div class="row">
-    <%= f.input :subject, label: false, wrapper_html: { class: 'col-12' } %>
-    <%= f.input :body, label: false, wrapper_html: { class: 'col-12' } %>
+    <%= f.input :subject, label: false, placeholder: "Message title", wrapper_html: { class: 'col-12' } %>
+    <%= f.input :body, label: false, placeholder: "Type your message here...", wrapper_html: { class: 'col-12' } %>
     <div class="col-12">
       <%= f.button :button, type: :submit, class: 'btn btn-secondary' do %>Create message<% end %>
     </div>

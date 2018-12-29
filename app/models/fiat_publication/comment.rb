@@ -19,8 +19,22 @@ module FiatPublication
     #   left_message: 3
     # }
 
-    # after_commit -> { Notification::CommentMentionJob.set(wait: 5.seconds).perform_later(self) }, on: :create
-
     # scope :internal, lambda { where(user_id: [User.internal.pluck(:id)]) }
+
+    after_commit :mention_users, on: :create # Ideally, this would be polymorphic-enabled
+
+    def mention_users
+      mentions ||= begin
+                     regex = /@([\w]+)/
+                     self.body.scan(regex).flatten
+                   end
+      mentioned_users ||= User.where(username: mentions)
+
+      if mentioned_users.any?
+        mentioned_users.each do |i|
+          FiatNotifications::Notification::CreateNotificationJob.set(wait: 5.seconds).perform_later(self, self.authorable, i, "mentioned", nil, nil)
+        end
+      end
+    end
   end
 end
