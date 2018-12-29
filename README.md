@@ -52,6 +52,8 @@ FiatPublication.new_content_block_redirect_path = "content_block_path"
 
 There's more discussion of initializer variables under [Routing](https://github.com/fiatinsight/fiat_publication#routing), below.
 
+*Note:* A `User` class is currently required by the `mention_users` class on `Comment` records. This also requires installation of the `fiat_notifications` gem, which will eventually be named as a dependency by this gem.
+
 ## Content
 
 ### Publishers
