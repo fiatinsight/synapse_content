@@ -24,9 +24,8 @@ The gem is designed to supply minimally formatted output so that you can influen
 
 ## Setup
 
-Install the migrations in your app root folder by running:
+Run the migrations from the engine by typing:
 
-    $ rails fiat_publication:install:migrations
     $ rake db:migrate
 
 Then mount the engine in your `routes.rb` file:
