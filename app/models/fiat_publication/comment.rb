@@ -32,7 +32,7 @@ module FiatPublication
 
       if mentioned_users.any?
         mentioned_users.each do |i|
-          FiatNotifications::Notification::CreateNotificationJob.set(wait: 5.seconds).perform_later(self, self.authorable, i, "mentioned", nil, nil)
+          FiatNotifications::Notification::CreateNotificationJob.set(wait: 5.seconds).perform_later(self, self.authorable, i, "mentioned", "User", [i.id])
         end
       end
     end
