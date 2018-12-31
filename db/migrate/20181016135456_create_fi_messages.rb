@@ -12,6 +12,10 @@ class CreateFiMessages < ActiveRecord::Migration[5.2]
       t.string :authorable_type
       t.integer :authorable_id
       t.integer :parent_id
+      t.string :name
+      t.string :company
+      t.string :email
+      t.string :phone_number
 
       t.timestamps
     end

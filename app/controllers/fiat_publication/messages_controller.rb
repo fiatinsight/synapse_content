@@ -16,7 +16,21 @@ module FiatPublication
 
       respond_to do |format|
         if @message.save
-          format.html { redirect_to main_app.send(FiatPublication.new_message_redirect_path, @message), notice: 'Message was created.' }
+          if params[:notice]
+            notice = params[:notice]
+          else
+            notice = 'Your message was created.'
+          end
+
+          if params[:content_label] && FiatPublication::ContentLabel.find_by(name: params[:content_label])
+            FiatPublication::ContentLabelAssignment.create(content_label_id: FiatPublication::ContentLabel.find_by(name: params[:content_label]).id, assignable: @message)
+          end
+
+          if params[:redirect_path]
+            format.html { redirect_to main_app.send(params[:redirect_path]), notice: notice }
+          else
+            format.html { redirect_to main_app.send(FiatPublication.new_message_redirect_path, @message), notice: notice }
+          end
         else
           format.html { render action: "new" }
         end
@@ -54,7 +68,8 @@ module FiatPublication
       end
 
       def message_params
-        params.require(:message).permit(:subject, :body, :authorable_type, :authorable_id)
+        params.require(:message).permit(:subject, :body, :authorable_type, :authorable_id, :name, :company,
+                                        :email, :phone_number)
       end
 
   end

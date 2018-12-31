@@ -8,13 +8,15 @@ module FiatPublication
     belongs_to :authorable, polymorphic: true
     has_many :comments, as: :commentable, dependent: :destroy
     has_many :attachments, as: :attachable, dependent: :destroy
+    has_many :content_label_assignments, as: :assignable, dependent: :destroy
+    has_many :content_labels, through: :content_label_assignments
     belongs_to :messageable, polymorphic: true
     # has_many :tasks, :dependent => :destroy
     # has_many :feeds, as: :trackable, :dependent => :destroy
 
     validates :subject, presence: true
     validates :body, presence: true
-    validates :authorable, presence: true
+    # validates :authorable, presence: true
 
     # enum label: {
     #   prospect: 0,

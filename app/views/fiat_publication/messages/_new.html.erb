@@ -1,9 +1,19 @@
+<% name_field ||= false %>
+<% company_field ||= false %>
+<% email_field ||= false %>
+<% phone_number_field ||= false %>
 <%= simple_form_for message, url: url do |f| %>
   <%= f.input :authorable_type, as: :hidden, input_html: { value: authorable_type } %>
   <%= f.input :authorable_id, as: :hidden, input_html: { value: authorable_id } %>
   <div class="row">
     <%= f.input :subject, label: false, placeholder: "Message title", wrapper_html: { class: 'col-12' } %>
     <%= f.input :body, label: false, placeholder: "Type your message here...", wrapper_html: { class: 'col-12' } %>
+    <% if email_field %>
+      <%= f.input :email, label: false, placeholder: "Your email", wrapper_html: { class: 'col-12' } %>
+    <% end %>
+    <% if phone_number_field %>
+      <%= f.input :phone_number, label: false, placeholder: "Your phone number", wrapper_html: { class: 'col-12' } %>
+    <% end %>
     <div class="col-12">
       <%= f.button :button, type: :submit, class: 'btn btn-secondary' do %>Create message<% end %>
     </div>
