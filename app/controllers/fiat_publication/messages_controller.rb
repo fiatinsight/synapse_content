@@ -68,8 +68,8 @@ module FiatPublication
       end
 
       def message_params
-        params.require(:message).permit(:subject, :body, :authorable_type, :authorable_id, :name, :company,
-                                        :email, :phone_number)
+        params.require(:message).permit(:subject, :body, :closed, :global_messageable, :name, :company,
+                                        :email, :phone_number, :global_owner, :value, :due_date)
       end
 
   end

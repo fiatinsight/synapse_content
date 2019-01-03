@@ -11,6 +11,7 @@ module FiatPublication
     has_many :content_label_assignments, as: :assignable, dependent: :destroy
     has_many :content_labels, through: :content_label_assignments
     belongs_to :messageable, polymorphic: true
+    belongs_to :owner, polymorphic: true
     # has_many :tasks, :dependent => :destroy
     # has_many :feeds, as: :trackable, :dependent => :destroy
 
@@ -37,12 +38,20 @@ module FiatPublication
 
     # after_commit -> { Notification::MessageMentionJob.set(wait: 5.seconds).perform_later(self) }, on: :create
 
-    # def global_messageable
-    #   self.messageable.to_global_id if self.messageable.present?
-    # end
-    #
-    # def global_messageable=(messageable)
-    #   self.messageable = GlobalID::Locator.locate messageable
-    # end
+    def global_messageable
+      self.messageable.to_global_id if self.messageable.present?
+    end
+
+    def global_messageable=(messageable)
+      self.messageable = GlobalID::Locator.locate messageable
+    end
+
+    def global_owner
+      self.owner.to_global_id if self.owner.present?
+    end
+
+    def global_owner=(owner)
+      self.owner = GlobalID::Locator.locate owner
+    end
   end
 end
