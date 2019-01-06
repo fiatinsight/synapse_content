@@ -16,7 +16,7 @@ module FiatPublication
     # has_many :feeds, as: :trackable, :dependent => :destroy
 
     validates :subject, presence: true
-    validates :body, presence: true
+    # validates :body, presence: true
     # validates :authorable, presence: true
 
     # enum label: {
