@@ -1,0 +1,10 @@
+<%= simple_form_for content_label_assignment, url: url do |f| %>
+  <%= f.input :assignable_type, as: :hidden, input_html: { value: assignable_type } %>
+  <%= f.input :assignable_id, as: :hidden, input_html: { value: assignable_id } %>
+  <div class="row">
+    <%= f.input :content_label, label: false, collection: FiatPublication::ContentLabel.all, placeholder: "Select a label", input_html: { class: 'chosen-select' } %>
+    <div class="col-12">
+      <%= f.button :button, type: :submit, class: 'btn btn-secondary' do %>Add label<% end %>
+    </div>
+  </div>
+<% end %>

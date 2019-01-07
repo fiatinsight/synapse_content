@@ -6,4 +6,6 @@ FiatPublication::Engine.routes.draw do
   resources :messages
   resources :comments
   resources :attachments
+  resources :content_labels
+  resources :content_label_assignments
 end
