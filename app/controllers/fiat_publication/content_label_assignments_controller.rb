@@ -37,7 +37,7 @@ module FiatPublication
       end
 
       def content_label_assignment_params
-        params.require(:content_label_assignment).permit(:content_label, :assignable)
+        params.require(:content_label_assignment).permit(:content_label_id, :assignable_type, :assignable_id)
       end
 
   end

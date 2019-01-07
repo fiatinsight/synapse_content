@@ -6,5 +6,8 @@ module FiatPublication
 
     belongs_to :content_label
     belongs_to :assignable, polymorphic: true
+
+    validates :content_label, presence: true
+    validates :assignable, presence: true
   end
 end
