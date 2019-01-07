@@ -4,9 +4,9 @@
   <%= f.input :commentable_type, as: :hidden, input_html: { value: commentable_type } %>
   <%= f.input :commentable_id, as: :hidden, input_html: { value: commentable_id } %>
   <div class="row">
-    <%= f.input :body, label: false, wrapper_html: { class: 'col-12' } %>
+    <%= f.input :body, label: false, placeholder: "Add a comment" wrapper_html: { class: 'col-12' } %>
     <div class="col-12">
-      <%= f.button :button, type: :submit, class: btn_classes do %>Publish comment<% end %>
+      <%= f.button :button, type: :submit, class: btn_classes do %>Publish<% end %>
     </div>
   </div>
 <% end %>
