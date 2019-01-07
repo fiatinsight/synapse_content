@@ -2,7 +2,7 @@
   <%= f.input :assignable_type, as: :hidden, input_html: { value: assignable_type } %>
   <%= f.input :assignable_id, as: :hidden, input_html: { value: assignable_id } %>
   <div class="row">
-    <%= f.input :content_label, label: false, collection: FiatPublication::ContentLabel.all, placeholder: "Select a label", input_html: { class: '' } %>
+    <%= f.input :content_label, label: false, collection: FiatPublication::ContentLabel.all, value_method: :id, label_method: :name, placeholder: "Select a label", input_html: { class: 'chosen-select' } %>
     <div class="col-12">
       <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-plus mr-2"></i>Add label<% end %>
     </div>
