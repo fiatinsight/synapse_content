@@ -29,8 +29,8 @@ module FiatPublication
 
     # scope :priority, lambda { where(priority: 1).includes(:comments, :tasks) }
     # scope :unlabeled, lambda { where(label: ["",nil]).includes(:comments, :tasks) }
-    # scope :open, lambda { where(closed: [0,nil]) }
-    # scope :closed, lambda { where(closed: 1) }
+    scope :open, lambda { where(closed: [0,nil]) }
+    scope :closed, lambda { where(closed: 1) }
     # scope :ticket, lambda { where(label: 1).includes(:comments, :tasks) }
     # scope :snoozed, lambda { where.not(snooze: [nil,0]).includes(:comments, :tasks) }
     # scope :excluded, lambda { where(excluded: 1) }
