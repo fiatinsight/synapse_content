@@ -43,7 +43,7 @@ module FiatPublication
       @comment.destroy
 
       respond_to do |format|
-        format.html { redirect_back(fallback_location: account_publisher_comments_path(@comment.publisher), notice: 'Comment successfully deleted.') }
+        format.html { redirect_back(fallback_location: comment_path(@comment), notice: 'Comment successfully deleted.') }
       end
     end
 
