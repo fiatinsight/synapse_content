@@ -26,7 +26,7 @@ module FiatPublication
       @content_label_assignment.destroy
 
       respond_to do |format|
-        format.html { redirect_back(fallback_location: content_label_assignments_path, notice: 'Block was removed.') }
+        format.html { redirect_back(fallback_location: content_label_assignments_path, notice: 'Label was removed.') }
       end
     end
 
