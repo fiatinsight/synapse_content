@@ -12,20 +12,10 @@ module FiatPublication
     has_many :content_labels, through: :content_label_assignments
     belongs_to :messageable, polymorphic: true
     belongs_to :owner, polymorphic: true
-    # has_many :tasks, :dependent => :destroy
-    # has_many :feeds, as: :trackable, :dependent => :destroy
+    has_many :custom_fields, as: :publishable, dependent: :destroy, inverse_of: :publishable
+    accepts_nested_attributes_for :custom_fields, reject_if: :all_blank, allow_destroy: true
 
     validates :subject, presence: true
-    # validates :body, presence: true
-    # validates :authorable, presence: true
-
-    # enum label: {
-    #   prospect: 0,
-    #   ticket: 1,
-    #   deliverable: 2,
-    #   review: 3,
-    #   discussion: 4
-    # }
 
     # scope :priority, lambda { where(priority: 1).includes(:comments, :tasks) }
     # scope :unlabeled, lambda { where(label: ["",nil]).includes(:comments, :tasks) }

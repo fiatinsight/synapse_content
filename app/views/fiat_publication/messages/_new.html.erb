@@ -14,6 +14,14 @@
     <% if phone_number_field %>
       <%= f.input :phone_number, label: false, placeholder: "Your phone number", wrapper_html: { class: 'col-12' } %>
     <% end %>
+    <div id="custom_fields">
+      <%= f.simple_fields_for :custom_fields do |custom_field| %>
+        <%= render 'custom_fields', f: custom_field %>
+      <% end %>
+    </div>
+    <div class="col-12">
+      <%= link_to_add_association 'add custom field', f, :custom_fields, partial: 'fiat_publication/messages/custom_field_fields', data: { association_insertion_node: '#custom_fields', association_insertion_method: :append }, class: 'btn btn-link' %>
+    </div>
     <div class="col-12">
       <%= f.button :button, type: :submit, class: 'btn btn-secondary' do %>Create message<% end %>
     </div>

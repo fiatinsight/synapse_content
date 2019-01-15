@@ -18,6 +18,8 @@ Or install it yourself as:
 
     $ gem install fiat_publication
 
+If you want to handle nested forms, you'll need to install the (Cocoon)[https://github.com/nathanvda/cocoon] gem in your main app. (Note: Cocoon might eventually be brought into this gem as a dependency.)
+
 ## Dependencies
 
 The gem is designed to supply minimally formatted output so that you can influence designs within your main application. It requires [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern for models to handle tokenization. It assumes (but doesn't require) that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui).
@@ -114,6 +116,10 @@ Messages are threaded, extendable content objects, similar to email threads.
 ### Comments
 
 Comments can be added to other content objects using the `commentable` polymorphic association.
+
+### Custom fields
+
+Custom fields can be programmed into forms on the main application. They're nested under messages, articles, and pages polymorphically as `publishable`.
 
 ### Authors
 
