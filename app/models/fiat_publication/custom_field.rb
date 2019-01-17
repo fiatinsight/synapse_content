@@ -4,7 +4,7 @@ module FiatPublication
 
     self.table_name = "fi_custom_fields"
 
-    belongs_to :publishable, polymorphic: true
+    belongs_to :publishable, polymorphic: true, touch: true
 
     has_one_attached :image
 
