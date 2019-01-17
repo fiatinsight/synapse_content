@@ -1,6 +1,7 @@
 module FiatPublication
   class Comment < ApplicationRecord
     include Tokenable
+    include ActionView::Helpers
 
     self.table_name = "fi_comments"
 
@@ -32,7 +33,18 @@ module FiatPublication
 
       if mentioned_users.any?
         mentioned_users.each do |i|
-          FiatNotifications::Notification::CreateNotificationJob.set(wait: 5.seconds).perform_later(self, self.authorable, i, "mentioned", "User", [i.id], nil, self.authorable.username, i.username, nil, self.body)
+          FiatNotifications::Notification::CreateNotificationJob.set(wait: 5.seconds).perform_later(
+            self,
+            self.authorable,
+            i,
+            action: "mentioned",
+            notified_type: "User",
+            notified_ids: [i.id],
+            email_template_id: FiatNotifications.email_template_id,
+            email_subject: "You were mentioned: '#{self.commentable.subject}' on #{l self.created_at, format: :complete}",
+            email_body: "#{self.body}",
+            reply_to_address: FiatNotifications.reply_to_email_address
+          )
         end
       end
     end
