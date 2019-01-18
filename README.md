@@ -1,34 +1,31 @@
 # Fiat Publication
 
-This engine is designed to be used by Fiat Insight developers on Rails projects that require a basic CMS.
+This engine is designed to be used by [@fiatinsight](https://fiatinsight.com) developers on Rails projects to speed up development of a custom content system&mdash;like a CMS or CRM.
 
-## Installation
+## Getting started
 
-Add this line to your application's Gemfile:
+Add this line to your application's `Gemfile`:
 
 ```ruby
 gem 'fiat_publication'
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install fiat_publication
-
-If you want to handle nested forms, you'll need to install the (Cocoon)[https://github.com/nathanvda/cocoon] gem in your main app. (Note: Cocoon might eventually be brought into this gem as a dependency.)
-
-## Dependencies
-
-The gem is designed to supply minimally formatted output so that you can influence designs within your main application. It requires [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern for models to handle tokenization. It assumes (but doesn't require) that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui).
-
-## Setup
-
-Run the migrations from the engine by typing:
+Then `bundle` and run the required migrations directly by typing:
 
     $ rake db:migrate
+
+Create an initializer at `config/initializers/fiat_publication.rb` to set any required global variables for your implementation. You should set any variables that pertain to parts of the gem you'll want to use. Variables give you the chance to pass namespacing into the engine's actions:
+
+```ruby
+FiatPublication.new_message_redirect_path = "message_path"
+FiatPublication.new_page_path = "new_admin_page_path"
+FiatPublication.view_page_path = "page_path"
+FiatPublication.new_page_redirect_path = "page_path"
+FiatPublication.new_article_redirect_path = "new_admin_article_path"
+FiatPublication.new_content_block_redirect_path = "content_block_path"
+```
+
+> Note: This section needs attention to improve the flexibility of the routing, especially with namespaced usage.
 
 Then mount the engine in your `routes.rb` file:
 
@@ -45,21 +42,23 @@ namespace :account do
 end
 ```
 
-Create an initializer at `config/initializers/fiat_publication.rb` to set any required global variables for your implementation. By default, the gem will supply its own variables, and you can add only the ones you need based on your usage. For example:
+## Dependencies
 
-```ruby
-FiatPublication.new_content_block_redirect_path = "content_block_path"
-```
+The engine supplies minimally formatted output so that you can influence designs within your main application. It requires [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
 
-There's more discussion of initializer variables under [Routing](https://github.com/fiatinsight/fiat_publication#routing), below.
+It assumes (but doesn't require) that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui), as well as [fiat_notifications](https://github.com/fiatinsight/fiat_notifications).
 
-*Note:* A `User` class is currently required by the `mention_users` class on `Comment` records. This also requires installation of the `fiat_notifications` gem, which will eventually be named as a dependency by this gem.
+> Note: A `User` class is currently required by the `mention_users` method on the `Comment` model. This assumes, too, that `fiat_notifications` is installed, which will eventually be a dependency for this gem.
 
-## Content
+If you want to handle dynamic, nested forms, you'll need to install the (Cocoon)[https://github.com/nathanvda/cocoon] gem in your main app.
+
+> Note: Cocoon might eventually be brought into this gem as a dependency.
+
+## Usage
 
 ### Publishers
 
-Content can optionally be assigned to a polymorphic `publisher` from your main app. This can also be omitted, in case there's only one content creator (e.g., in a simple, non-scaled application). You can listen for `publisher` content on any model(s) you want:
+Content can optionally be assigned to a polymorphic `publisher` as a class from your main app. This can also be omitted, in case there's only one content creator (e.g., in a simple, non-scaled application). You can listen for `publisher` content on any model(s) you want:
 
 ```ruby
 class Organization < ApplicationRecord
@@ -69,9 +68,13 @@ class Organization < ApplicationRecord
 end
 ```
 
-### Pages
+### Content types
 
-Pages are basic content types available through the engine. The gem offers form views for creating and editing pages. To create a new page, you can just put:
+This engine supplies a variety of content types that can be invoked in custom configurations to do whatever you need. There are some guiding ideas, though, that'll help to implement the available resources better.
+
+#### Pages and articles
+
+Pages and articles are basic content types. Pages are intended for more permanent content, and articles are designed to be more transient / ephemeral. You can invoke a new page with:
 
 ```ruby
 = link_to send("#{FiatPublication.new_page_path}", publisher_type: nil, publisher_id: nil)
@@ -94,38 +97,58 @@ locals = {
 = render partial: 'fiat_publication/pages/edit', locals: locals
 ```
 
-### Articles
+> TODO: This section needs considerably more detail around working with engine-supplied page and article forms, writing your own forms, required parameters, routing options, etc.
 
-Documentation forthcoming...
+#### Content blocks
 
-### Content blocks
+Content blocks are granular elements used to build pages and articles. By default, the `Page` and `Article` classes in this gem use `has_many` polymorphic associations for content blocks as `publishable`.
 
-Content blocks are granular elements used to build pages and articles. By default, they belong to a polymorphic `publishable` object. You can use any model(s) in your app as `publishable`. To associate content blocks with your object(s), for example with a page, include the following on your model:
+You can also extend a similar relationship to any model(s) in your main app. For example:
 
 ```ruby
-class Page < ApplicationRecord
+class MyPage < ApplicationRecord
   # ...
   has_many :fiat_publication_content_blocks, as: :publishable, class_name: 'FiatPublication::ContentBlock'
 end
 ```
 
-### Messages
+Content blocks also require a `block_type` value that can be set to `text`, `image`, or `buttons`. The type of block determines what fields are made available to utilize. Content blocks with images use Active Storage to store and process image files.
 
-Messages are threaded, extendable content objects, similar to email threads.
+> Note: More block types will be forthcoming.
 
-### Comments
+#### Authors
 
-Comments can be added to other content objects using the `commentable` polymorphic association.
+Authors can be created and associated with articles.
 
-### Custom fields
+> TODO: Extend the `Author` class to accommodate more information, and to associate with other main app classes, like `User`.
 
-Custom fields can be programmed into forms on the main application. They're nested under messages, articles, and pages polymorphically as `publishable`.
+#### Messages and comments
 
-### Authors
+Messages enable threaded content, similar to email. Adding comments to messages allows you to extend them indefinitely. A message automatically `has_many` comments; but comments can also be added to other content objects in the engine, or within your main app, using a similar `commentable` polymorphic relationship.
 
-Documentation forthcoming...
+You only need to supply a `subject` to create a message.
 
-## Routing
+> TODO: This section needs more detail around working with engine-supplied message forms, writing your own forms, including custom fields and labels, etc.
+
+#### Attachments
+
+Attachments are standalone content objects that use Active Storage to store files.
+
+> TODO: This content type is undeveloped. Extrapolating current attachment logic, routing, etc., in conjunction w/ best practice Active Storage use is required. (See [this issue](https://github.com/fiatinsight/fiat_publication/issues/6).)
+
+#### Custom fields
+
+Custom fields can be programmed into forms on the main application. Within the engine, they're automatically associated as `publishable` with messages, articles, and pages. Each of these classes also accepts nested attributes for custom fields, allowing you to include them in custom forms within your main application.
+
+#### Content labels
+
+Content labels are designed to work like Gmail labels: They're flattened objects that can be associated with individual instances of a class to make taxonomies easier and super flexible. Content labels are automatically associated to pages, articles, and messages in the engine via the `ContentLabelAssignment` class as `assignable`.
+
+#### Navigation
+
+> TODO: Navigation items and groups, drawing in engine classes, need to be extrapolated from current use. (See [this issue](https://github.com/fiatinsight/fiat_publication/issues/5).)
+
+### Routing
 
 Depending on where you mount the engine, routing to its resources will work differently. For example, within an `account` namespace, a new content block could be created using something like:
 
@@ -155,7 +178,7 @@ Displaying content just requires that you use the typical associations. For exam
 end
 ```
 
-## Customization
+### Customization
 
 You can use the gem resources directly, or wrap them into custom namespaces, views, and controller logic within your main app. For example, after mounting it within a namespace called `account`, you could create a series of controllers under your `AccountController` to handle provided resources, e.g., `Account::PagesController` or `Account::ArticlesController`. You can do this for some resources or all of them. Make sure to create routes for each resource type you want to handle:
 
