@@ -9,7 +9,7 @@ module FiatPublication
 
     has_one_attached :image
 
-    validates :publisher, presence: true
+    validates :publishable, presence: true
     validates :block_type, presence: true
 
     enum block_type: {

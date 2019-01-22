@@ -19,6 +19,7 @@
           <%= f.input :button_link_3, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
         </div>
       <% end %>
+      <%= f.input :position, collection: 1..100, prompt: "Select a position", wrapper_html: { class: 'col-12' }, input_html: { class: 'chosen-select' } %>
     </div>
     <div class="col-12">
       <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-save mr-2"></i>Save <%= content_block.block_type.humanize.downcase %><% end %>
