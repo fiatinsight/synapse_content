@@ -25,5 +25,7 @@
         <% end %>
       </div>
     </div>
+  <% elsif content_block.script? %>
+    <%= sanitize content_block.text_content, tags: %w(iframe) %>
   <% end %>
 </div>

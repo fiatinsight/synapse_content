@@ -15,7 +15,8 @@ module FiatPublication
     enum block_type: {
       text: 0,
       image: 1,
-      buttons: 2
+      buttons: 2,
+      script: 3
     }
   end
 end

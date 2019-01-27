@@ -18,6 +18,8 @@
           <%= f.input :button_link_2, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
           <%= f.input :button_link_3, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
         </div>
+      <% elsif content_block.script? %>
+        <%= f.input :text_content, placeholder: "Add script here..." %>
       <% end %>
       <%= f.input :position, collection: 1..100, prompt: "Select a position", wrapper_html: { class: 'col-12' }, input_html: { class: 'chosen-select' } %>
     </div>
