@@ -150,6 +150,16 @@ Content labels are designed to work like Gmail labels: They're flattened objects
 
 > TODO: Navigation items and groups, drawing in engine classes, need to be extrapolated from current use. (See [this issue](https://github.com/fiatinsight/fiat_publication/issues/5).)
 
+### Snoozing
+
+Snoozing is available for messages, by default. You can create a link to snooze something like this:
+
+```ruby
+= link_to "Snooze this", fiat_publication.new_snooze_path(snoozable_type: "FiatPublication::Message", snoozable_id: @message.id, snoozer_type: "User", snoozer_id: current_user.id), remote: true
+```
+
+Set up automatic unsnoozing in your Heroku app using `rake unsnooze_things` in a cron scheduler.
+
 ### Routing
 
 Depending on where you mount the engine, routing to its resources will work differently. For example, within an `account` namespace, a new content block could be created using something like:
