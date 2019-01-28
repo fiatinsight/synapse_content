@@ -39,6 +39,10 @@ module FiatPublication
       end
     end
 
+    def auto_unsnooze
+      Snooze.past_due.destroy_all
+    end
+
     private
 
       def set_snooze

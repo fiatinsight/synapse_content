@@ -11,5 +11,7 @@ module FiatPublication
     validates :snoozer, presence: true
     validates :unsnooze_date, presence: true
     validates :unsnooze_time, presence: true
+
+    scope :past_due, lambda { where("unsnooze_date <= ? && unsnooze_time <= ?", Date.today, Time.now) }
   end
 end
