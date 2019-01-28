@@ -1,0 +1,14 @@
+<%= simple_form_for FiatPublication::Snooze.new do |f| %>
+  <%= f.input :snoozable_type, as: :hidden, input_html: { value: params[:snoozable_type] } %>
+  <%= f.input :snoozable_id, as: :hidden, input_html: { value: params[:snoozable_id] } %>
+  <%= f.input :snoozer_type, as: :hidden, input_html: { value: params[:snoozer_type] } %>
+  <%= f.input :snoozer_id, as: :hidden, input_html: { value: params[:snoozer_id] } %>
+  <div class="row">
+    <div class="col-12">
+      <%= f.input :unsnooze_date, placeholder: "Date" %>
+      <%= f.input :unsnooze_time, placeholder: "Time" %>
+    <div class="col-12">
+      <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-clock mr-2"></i>Set snooze<% end %>
+    </div>
+  </div>
+<% end %>
