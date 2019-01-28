@@ -10,6 +10,7 @@ module FiatPublication
     has_many :attachments, as: :attachable, dependent: :destroy
     has_many :content_label_assignments, as: :assignable, dependent: :destroy
     has_many :content_labels, through: :content_label_assignments
+    has_many :snoozes, as: :snoozable, dependent: :destroy
     belongs_to :messageable, polymorphic: true
     belongs_to :owner, polymorphic: true
     has_many :custom_fields, as: :publishable, dependent: :destroy, inverse_of: :publishable
