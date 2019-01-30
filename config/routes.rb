@@ -8,5 +8,6 @@ FiatPublication::Engine.routes.draw do
   resources :attachments
   resources :content_labels
   resources :content_label_assignments
+  resources :custom_fields
   resources :snoozes
 end
