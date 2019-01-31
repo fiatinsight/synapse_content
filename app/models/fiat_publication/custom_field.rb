@@ -1,6 +1,7 @@
 module FiatPublication
   class CustomField < ApplicationRecord
     include Tokenable
+    audited associated_with: :publishable
 
     self.table_name = "fi_custom_fields"
 
