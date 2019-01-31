@@ -1,6 +1,8 @@
 module FiatPublication
   class Message < ApplicationRecord
     include Tokenable
+    audited
+    has_associated_audits
 
     self.table_name = "fi_messages"
 
