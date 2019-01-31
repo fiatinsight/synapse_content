@@ -46,7 +46,7 @@ end
 
 ## Dependencies
 
-The engine supplies minimally formatted output so that you can influence designs within your main application. It requires [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
+The engine supplies minimally formatted output so that you can influence designs within your main application. It requires [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), [audited](https://github.com/collectiveidea/audited), and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
 
 It assumes (but doesn't require) that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui), as well as [fiat_notifications](https://github.com/fiatinsight/fiat_notifications).
 
