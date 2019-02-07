@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     fiat_publication (0.1.1)
+      audited
       cocoon
       jquery-atwho-rails
       rails (~> 5.2.1)
@@ -53,6 +54,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     arel (9.0.0)
+    audited (4.8.0)
+      activerecord (>= 4.0, < 5.3)
     builder (3.2.3)
     cocoon (1.2.12)
     concurrent-ruby (1.1.4)
