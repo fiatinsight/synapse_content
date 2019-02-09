@@ -1,8 +1,8 @@
 module FiatPublication
   class Page < ApplicationRecord
     include Tokenable
-    audited
-    has_associated_audits
+    # audited
+    # has_associated_audits
 
     self.table_name = "fi_pages"
 

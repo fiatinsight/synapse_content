@@ -1,10 +1,14 @@
-<%= simple_form_for page, url: url do |f| %>
-  <%= f.input :publisher_type, as: :hidden, input_html: { value: params[:publisher_type] } %>
-  <%= f.input :publisher_id, as: :hidden, input_html: { value: params[:publisher_id] } %>
-  <div class="row">
-    <%= f.input :title, label: false, wrapper_html: { class: 'col-12' } %>
-    <div class="col-12">
-      <%= f.button :button, type: :submit, class: btn_classes do %>Create page<% end %>
-    </div>
+<section class="page cms editor">
+  <div class="container">
+    <%= simple_form_for page, url: url do |f| %>
+      <%= f.input :publisher_type, as: :hidden, input_html: { value: params[:publisher_type] } %>
+      <%= f.input :publisher_id, as: :hidden, input_html: { value: params[:publisher_id] } %>
+      <div class="row">
+        <%= f.input :title, label: false, placeholder: "Title (required)", wrapper_html: { class: 'col-12' } %>
+        <div class="col-12">
+          <%= f.button :button, type: :submit, class: btn_classes do %>Create page<% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</section>

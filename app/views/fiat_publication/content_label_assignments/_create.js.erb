@@ -1,0 +1,5 @@
+// Makes an item selected
+$('.check-box.unselected[data-tag-id="<%= @content_label_assignment.content_label_id %>"]').bind('ajax:success', function() {
+  $(this).replaceWith("<%= j render('remove_content_label_assignment_link') %>");
+  console.log("create.js invoked <%= @content_label_assignment.tag_id %>");
+});

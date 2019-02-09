@@ -13,10 +13,6 @@
       <div class="row">
         <div class="col-12 py-3">
           <%= f.input :title, label: false, placeholder: "Title (required)" %>
-          <% if action_name != "edit" %>
-            <%= f.input :image_placement, as: :hidden, input_html: { value: :billboard } %>
-            <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-3 mr-3" do %><i class="far fa-check mr-2"></i>Create this page<% end %>
-          <% end %>
         </div>
       </div>
     <% end %>
@@ -37,6 +33,7 @@
         <%= link_to new_content_block_url, remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<% end %>
       </div>
       <div class="col-lg-4 my-2 py-5 pl-5 layer-0">
+        <%= render partial: 'fiat_publication/content_labels/checklist', locals: { labels: FiatPublication::ContentLabel.order("name ASC").all, assignable: page } %>
         <%= simple_form_for page, url: page_update_url do |f| %>
           <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-5" do %><i class="far fa-check mr-2"></i>Save page<% end %>
           <%= f.input :excerpt, placeholder: "Add a short description (10 to 20 words)" %>
