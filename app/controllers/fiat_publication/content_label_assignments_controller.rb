@@ -38,7 +38,7 @@ module FiatPublication
       @content_label_assignment.destroy
 
       respond_to do |format|
-        format.html { redirect_back(fallback_location: content_label_assignments_path, notice: 'Label was removed.') }
+        format.js { render :partial => 'fiat_publication/content_label_assignments/destroy.js.erb', layout: false }
       end
     end
 
