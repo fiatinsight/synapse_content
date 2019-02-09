@@ -8,7 +8,7 @@
         <% if content_block.image.attached? %>
           <%= image_tag content_block.image.variant(resize: "500x500"), width: "100%", class: "mb-3" %>
         <% end %>
-        <%= f.input :image, as: :file, label: "Upload image" %>
+        <%= f.input :image, as: :file, label: "Upload image", input_html: { direct_upload: true } %>
       <% elsif content_block.buttons? %>
         <div class="row">
           <%= f.input :button_title_1, label: "Button Title (1)", wrapper_html: { class: 'col-lg-4' } %>
@@ -21,10 +21,20 @@
       <% elsif content_block.script? %>
         <%= f.input :text_content, placeholder: "Add script here..." %>
       <% end %>
-      <%= f.input :position, collection: 1..100, prompt: "Select a position", wrapper_html: { class: 'col-12' }, input_html: { class: 'chosen-select' } %>
     </div>
     <div class="col-12">
-      <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-save mr-2"></i>Save <%= content_block.block_type.humanize.downcase %><% end %>
+      <div class="row">
+        <div class="col-lg-2">
+          <%= link_to "Order:", "#", class: 'btn btn-link disabled' %>
+        </div>
+        <%= f.input :position, collection: 1..100, label: false, prompt: "Select a position", wrapper_html: { class: 'col-lg-2' } %>
+        <div class="col-lg-4">
+          <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-save mr-2"></i>Save block<% end %>
+        </div>
+        <div class="col-lg-4">
+          <%= link_to fiat_publication.content_block_path(content_block), method: :delete, data: { confirm: "Are you sure you want to remove this block and its content?" }, class: 'btn btn-link', style: 'float: right;' do %><i class="far fa-ban"></i><% end %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>
