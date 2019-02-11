@@ -35,7 +35,11 @@ module FiatPublication
       @attachment.destroy
 
       respond_to do |format|
-        format.html { redirect_to attachments_path, notice: 'Attachment was successfully deleted.' }
+        if params[:nested_parent_id]
+          format.html { redirect_to main_app.send(FiatPublication.attachments_path, params[:nested_parent_id]), notice: 'Attachment was successfully deleted.' }
+        else
+          format.html { redirect_to main_app.send(FiatPublication.attachments_path), notice: 'Attachment was successfully deleted.' }
+        end
       end
     end
 

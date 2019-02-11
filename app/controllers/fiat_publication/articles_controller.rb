@@ -45,7 +45,11 @@ module FiatPublication
       @article.destroy
 
       respond_to do |format|
-        format.html { redirect_to account_publisher_articles_path(@article.publisher), notice: 'Article was successfully deleted.' }
+        if params[:nested_parent_id]
+          format.html { redirect_to main_app.send(FiatPublication.articles_path, params[:nested_parent_id]), notice: 'Article was successfully deleted.' }
+        else
+          format.html { redirect_to main_app.send(FiatPublication.articles_path), notice: 'Article was successfully deleted.' }
+        end
       end
     end
 

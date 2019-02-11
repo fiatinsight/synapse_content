@@ -12,7 +12,7 @@
     <% end %>
     <div class="row justify-content-end">
       <div class="col-4 my-2">
-        <%= link_to attachment, method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
+        <%= link_to "#{attachment_update_url}?nested_parent_id=#{nested_parent_id}", method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
           <i class="far fa-trash mr-2"></i>Delete this attachment
         <% end %>
       </div>
