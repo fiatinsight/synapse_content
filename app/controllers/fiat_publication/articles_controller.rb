@@ -56,7 +56,8 @@ module FiatPublication
       end
 
       def article_params
-        params.require(:article).permit(:publisher_type, :publisher_id, :title, :slug, :image, :excerpt, :image_placement)
+        params.require(:article).permit(:publisher_type, :publisher_id, :title, :slug, :image, :excerpt, :image_placement,
+                                        :published_at)
       end
 
   end

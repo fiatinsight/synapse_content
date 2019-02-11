@@ -24,5 +24,15 @@ module FiatPublication
     }, _prefix: :image
 
     scope :published, lambda { where.not(published_at: nil).includes(:author) }
+    scope :scheduled, lambda { where("published_at > ?", DateTime.now) }
+    scope :visible, lambda { where("published_at <= ?", DateTime.now) }
+
+    def is_published?
+      if self.published_at
+        true
+      else
+        false
+      end
+    end
   end
 end

@@ -32,6 +32,22 @@
         <%= link_to new_content_block_url, remote: true, class: 'btn btn-secondary' do %><i class="far fa-plus mr-2"></i>Add content block<% end %>
       </div>
       <div class="col-lg-4 my-2 pb-5 pl-3">
+        <div class="row">
+          <div class="col-12">
+            <% if !article.is_published? %>
+              <%= simple_form_for article, url: article_update_url do |f| %>
+                <%= f.input :published_at, html5: true, as: :date, label: "Select a publication date" %>
+                <%= f.button :button, type: :submit, class: "btn btn-success layer-1 mb-5", data: { confirm: 'Please make sure to save any changes to the article before publishing. Are you sure you are ready?' } do %><i class="far fa-envelope mr-2"></i>Publish this article<% end %>
+              <% end %>
+            <% else %>
+              <p class="desc"><i class="far fa-envelope mr-2"></i><%= l article.published_at, format: :date_only %></p>
+              <%= simple_form_for article, url: article_update_url do |f| %>
+                <%= f.input :published_at, as: :hidden, input_html: { value: nil }, wrapper_html: { class: 'my-0' } %>
+                <%= f.button :button, type: :submit, class: "btn btn-secondary layer-1 mb-5", data: { confirm: 'Are you sure you want to unpublish this article?' } do %><i class="far fa-envelope-open mr-2"></i>Unpublish this article<% end %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
         <div class="mb-5">
           <%= render partial: 'fiat_publication/content_labels/checklist', locals: { labels: FiatPublication::ContentLabel.order("name ASC").all, assignable: article } %>
         </div>
