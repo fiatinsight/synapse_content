@@ -20,7 +20,8 @@
       <div class="col-lg-8">
         <% if page.content_blocks.any? %>
           <% page.content_blocks.order("position ASC").each do |i| %>
-            <div class="sheet p-5 mb-3 bg-white layer-0">
+            <div class="sheet py-5">
+              <h3>Edit block</h3>
               <% content_block = FiatPublication::ContentBlock.find(i.id) %>
               <% content_block_url = "#{content_block_path}/#{content_block.id}" %>
               <%= render partial: 'fiat_publication/content_blocks/form', locals: { content_block: content_block, url: content_block_url } %>
