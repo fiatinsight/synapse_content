@@ -1,25 +1,25 @@
-<%= simple_form_for content_block, url: url do |f| %>
-  <%#= f.input :priority, as: :hidden, input_html: { value: 0 } %>
+<%= simple_form_for content_block, url: url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
   <div class="row">
     <div class="col-12">
       <% if content_block.text? %>
-        <%= f.trix_editor :text_content, placeholder: "Type page content here..." %>
+        <%= f.trix_editor :text_content, placeholder: "Type page content here...", data: { action: "keyup->autosave#save" } %>
       <% elsif content_block.image? %>
         <% if content_block.image.attached? %>
           <%= image_tag content_block.image.variant(resize: "500x500"), width: "100%", class: "mb-3" %>
         <% end %>
         <%= f.input :image, as: :file, label: "Upload image", input_html: { direct_upload: true } %>
+        <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-cloud-upload mr-2"></i>Save image<% end %>
       <% elsif content_block.buttons? %>
         <div class="row">
-          <%= f.input :button_title_1, label: "Button Title (1)", wrapper_html: { class: 'col-lg-4' } %>
-          <%= f.input :button_title_2, label: "Button Title (2)", wrapper_html: { class: 'col-lg-4' } %>
-          <%= f.input :button_title_3, label: "Button Title (3)", wrapper_html: { class: 'col-lg-4' } %>
-          <%= f.input :button_link_1, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
-          <%= f.input :button_link_2, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
-          <%= f.input :button_link_3, label: "Link", wrapper_html: { class: 'col-lg-4' } %>
+          <%= f.input :button_title_1, label: "Button Title (x)", wrapper_html: { class: 'col-lg-4' }, input_html: { data: { action: "keyup->autosave#save" }} %>
+          <%= f.input :button_title_2, label: "Button Title (2)", wrapper_html: { class: 'col-lg-4' }, input_html: { data: { action: "keyup->autosave#save" }} %>
+          <%= f.input :button_title_3, label: "Button Title (3)", wrapper_html: { class: 'col-lg-4' }, input_html: { data: { action: "keyup->autosave#save" }} %>
+          <%= f.input :button_link_1, label: "Link", wrapper_html: { class: 'col-lg-4' }, input_html: { data: { action: "keyup->autosave#save" }} %>
+          <%= f.input :button_link_2, label: "Link", wrapper_html: { class: 'col-lg-4' }, input_html: { data: { action: "keyup->autosave#save" }} %>
+          <%= f.input :button_link_3, label: "Link", wrapper_html: { class: 'col-lg-4' }, input_html: { data: { action: "keyup->autosave#save" }} %>
         </div>
       <% elsif content_block.script? %>
-        <%= f.input :text_content, placeholder: "Add script here..." %>
+        <%= f.input :text_content, placeholder: "Add script here...", input_html: { data: { action: "keyup->autosave#save" }} %>
       <% end %>
     </div>
     <div class="col-12">
@@ -27,12 +27,12 @@
         <div class="col-lg-2">
           <%= link_to "Order:", "#", class: 'btn btn-link disabled' %>
         </div>
-        <%= f.input :position, collection: 1..100, label: false, prompt: "Select a position", wrapper_html: { class: 'col-lg-2' } %>
+        <%= f.input :position, label: false, collection: 1..100, prompt: "#", wrapper_html: { class: 'col-lg-2' }, input_html: { class: '', data: { action: "change->autosave#save" }} %>
         <div class="col-lg-4">
-          <%= f.button :button, type: :submit, class: 'btn btn-link' do %><i class="far fa-save mr-2"></i>Save block<% end %>
+          <span class="text-muted btn btn-link" data-target="autosave.status"></span>
         </div>
         <div class="col-lg-4">
-          <%= link_to fiat_publication.content_block_path(content_block), method: :delete, data: { confirm: "Are you sure you want to remove this block and its content?" }, class: 'btn btn-link', style: 'float: right;' do %><i class="far fa-ban"></i><% end %>
+          <%= link_to url, method: :delete, data: { confirm: "Are you sure you want to remove this block and its content?" }, class: 'btn btn-link', style: 'float: right;' do %><i class="far fa-ban"></i><% end %>
         </div>
       </div>
     </div>
