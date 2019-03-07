@@ -1,0 +1,14 @@
+<table class="table list">
+  <tbody>
+    <% labels.each do |i| %>
+      <tr>
+        <% if FiatPublication::ContentLabelAssignment.find_by(content_label_id: i.id, assignable_type: "#{assignable.model_name}", assignable_id: assignable.id) %>
+          <td><%= link_to fiat_publication.content_label_assignment_path(FiatPublication::ContentLabelAssignment.find_by(content_label_id: i.id, assignable_type: "#{assignable.model_name}", assignable_id: assignable.id)), method: :delete, remote: true, class: 'check-box selected', data: { turbolinks: false, content_label_id: i.id } do %><i class="far fa-check-square"></i><% end %></td>
+        <% else %>
+          <td><%= link_to fiat_publication.content_label_assignments_path(content_label_id: i.id, assignable_id: assignable.id, assignable_type: "#{assignable.model_name}"), method: :post, remote: true, class: 'check-box unselected', data: { turbolinks: false, content_label_id: i.id } do %><i class="far fa-square"></i><% end %></td>
+        <% end %>
+        <td><%= i.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

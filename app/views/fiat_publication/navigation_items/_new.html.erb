@@ -1,0 +1,25 @@
+<section class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2><i class="far fa-list mr-3"></i>Item</h2>
+      </div>
+    </div>
+    <%= simple_form_for navigation_item, url: url do |f| %>
+      <%= f.input :publisher_type, as: :hidden, input_html: { value: publisher_type } %>
+      <%= f.input :publisher_id, as: :hidden, input_html: { value: publisher_id } %>
+      <div class="row grouping">
+        <%= f.input :title, placeholder: "Type name here", label: "Item title", wrapper_html: { class: 'col-4' } %>
+        <%#= f.input :global_navigable, collection: [Current.parish.articles, Current.parish.pages, Current.parish.attachments], input_html: { class: 'chosen-select' }, wrapper_html: { class: 'col-6' }, as: :grouped_select, group_method: :all, group_label_method: :model_name, label_method: :title, value_method: :to_global_id %>
+        <%#= f.input :position, placeholder: "Number", collection: 0..100, wrapper_html: { class: 'col-2' }, include_blank: false %>
+        <%#= f.input :url, placeholder: "https://", label: "URL", wrapper_html: { class: 'col-6' }, hint: "If you want your link to go to an external site, just type the URL here." %>
+        <%#= f.association :navigation_group, collection: navigation_item.publisher.navigation_groups, label_method: :title, input_method: :id, prompt: "Select group", wrapper_html: { class: 'col-6' }, input_html: { class: 'chosen-select' }, hint: "An item needs to be associated with a group to display in your menu." %>
+        <%#= f.input :icon, placeholder: "Name", wrapper_html: { class: 'col-6' } %>
+        <%#= f.input :button, as: :boolean, label: "Include button on homepage", wrapper_html: { class: 'col-6' }, hint: "You can display up to two navigation items as buttons on your homepage (in addition to them appearing in your menu)." %>
+        <div class="col-12">
+          <%= f.button :button, type: :submit, class: "btn btn-secondary layer-1" do %><i class="far fa-check mr-2"></i>Save item<% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

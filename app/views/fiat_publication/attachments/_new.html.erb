@@ -1,0 +1,15 @@
+<section class="page cms editor">
+  <div class="container">
+    <%= simple_form_for attachment, url: url do |f| %>
+      <%= f.input :publisher_type, as: :hidden, input_html: { value: publisher_type } %>
+      <%= f.input :publisher_id, as: :hidden, input_html: { value: publisher_id } %>
+      <div class="row">
+        <div class="col-8 primary">
+          <%= f.input :title, label: false, placeholder: "Title" %>
+          <%= f.input :file, as: :file, label: "Upload file", input_html: { direct_upload: true } %>
+          <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-3 mr-3" do %><i class="far fa-check mr-2"></i>Save attachment<% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

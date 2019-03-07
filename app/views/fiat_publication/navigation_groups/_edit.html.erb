@@ -1,0 +1,25 @@
+<section class="page cms editor">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2><i class="far fa-layer-group mr-3"></i>Navigation Group</h2>
+      </div>
+    </div>
+    <%= simple_form_for navigation_group, url: navigation_group_update_url do |f| %>
+      <div class="row grouping">
+        <%= f.input :title, placeholder: "Type name here", label: "Item title", wrapper_html: { class: 'col-4' } %>
+        <%= f.input :position, placeholder: "Number", collection: 0..100, wrapper_html: { class: 'col-2' }, include_blank: false %>
+        <div class="col-12">
+          <%= f.button :button, type: :submit, class: "btn btn-secondary layer-1" do %><i class="far fa-check mr-2"></i>Save group<% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row justify-content-end">
+      <div class="col-4 my-2">
+        <%= link_to "#{navigation_group_update_url}?nested_parent_id=#{nested_parent_id}", method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
+          <i class="far fa-trash mr-2"></i>Delete this group
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

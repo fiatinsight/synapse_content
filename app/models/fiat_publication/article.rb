@@ -13,5 +13,26 @@ module FiatPublication
     accepts_nested_attributes_for :custom_fields, reject_if: :all_blank, allow_destroy: true
     has_many :content_label_assignments, as: :assignable, dependent: :destroy
     has_many :content_labels, through: :content_label_assignments
+
+    has_one_attached :image
+
+    validates :title, presence: true
+
+    enum image_placement: {
+      billboard: 0,
+      right: 1
+    }, _prefix: :image
+
+    scope :published, lambda { where.not(published_at: nil).includes(:author) }
+    scope :scheduled, lambda { where("published_at > ?", DateTime.now) }
+    scope :visible, lambda { where("published_at <= ?", DateTime.now) }
+
+    def is_published?
+      if self.published_at
+        true
+      else
+        false
+      end
+    end
   end
 end

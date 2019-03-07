@@ -1,0 +1,20 @@
+<section class="page">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2><i class="far fa-layer-group mr-3"></i>Navigation Group</h2>
+      </div>
+    </div>
+    <%= simple_form_for navigation_group, url: url do |f| %>
+      <%= f.input :publisher_type, as: :hidden, input_html: { value: publisher_type } %>
+      <%= f.input :publisher_id, as: :hidden, input_html: { value: publisher_id } %>
+      <div class="row grouping">
+        <%= f.input :title, placeholder: "Type name here", label: "Group title", wrapper_html: { class: 'col-4' } %>
+        <%= f.input :position, placeholder: "Number", collection: 0..100, wrapper_html: { class: 'col-2' }, include_blank: false %>
+        <div class="col-12">
+          <%= f.button :button, type: :submit, class: "btn btn-secondary layer-1" do %><i class="far fa-check mr-2"></i>Save group<% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

@@ -45,7 +45,11 @@ module FiatPublication
       @page.destroy
 
       respond_to do |format|
-        format.html { redirect_to account_publisher_pages_path(@page.publisher), notice: 'Page was successfully deleted.' }
+        if params[:nested_parent_id]
+          format.html { redirect_to main_app.send(FiatPublication.pages_path, params[:nested_parent_id]), notice: 'Page was successfully deleted.' }
+        else
+          format.html { redirect_to main_app.send(FiatPublication.pages_path), notice: 'Page was successfully deleted.' }
+        end
       end
     end
 

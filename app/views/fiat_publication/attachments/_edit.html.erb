@@ -1,0 +1,21 @@
+<section class="page cms editor">
+  <div class="container">
+    <%= simple_form_for attachment, url: attachment_update_url do |f| %>
+      <div class="row">
+        <div class="col-8 primary">
+          <%= f.input :title, label: false, placeholder: "Title" %>
+          <%= link_to url_for(attachment.file), target: "_blank", class: "btn btn-link mb-3" do %><i class="far fa-external-link mr-2"></i>View file<% end %>
+          <%= f.input :file, as: :file, label: "Replace file", input_html: { direct_upload: true } %>
+          <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-3 mr-3" do %><i class="far fa-check mr-2"></i>Save attachment<% end %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row justify-content-end">
+      <div class="col-4 my-2">
+        <%= link_to "#{attachment_update_url}?nested_parent_id=#{nested_parent_id}", method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
+          <i class="far fa-trash mr-2"></i>Delete this attachment
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
