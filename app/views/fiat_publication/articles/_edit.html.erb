@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="mb-5">
-          <%= render partial: 'fiat_publication/content_labels/checklist', locals: { labels: FiatPublication::ContentLabel.order("name ASC").all, assignable: article } %>
+          <%= render partial: 'fiat_publication/content_labels/checklist', locals: { labels: FiatPublication::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).order("name ASC").all, assignable: article } %>
         </div>
         <%= simple_form_for article, url: article_update_url do |f| %>
           <%= f.input :excerpt, placeholder: "Add a short description (10 to 20 words)" %>
