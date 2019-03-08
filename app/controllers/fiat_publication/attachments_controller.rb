@@ -2,6 +2,10 @@ module FiatPublication
   class AttachmentsController < ActionController::Base
     before_action :set_attachment, only: [:show, :edit, :update, :destroy]
 
+    def show
+      redirect_to url_for(@attachment.file)
+    end
+
     def new
       @attachment = Attachment.new
     end
