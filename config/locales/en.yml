@@ -1,0 +1,7 @@
+en:
+  date:
+    formats:
+      date_only: '%B %e, %Y'
+  time:
+    formats:
+      date_only: '%B %e, %Y'
