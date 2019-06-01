@@ -7,7 +7,7 @@ module FiatPublication
     belongs_to :publishable, polymorphic: true
 
     has_one_attached :image
-    validates :image, presence: true, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..5.megabytes }
+    validates :image, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..5.megabytes }
 
     validates :publishable, presence: true
     validates :block_type, presence: true

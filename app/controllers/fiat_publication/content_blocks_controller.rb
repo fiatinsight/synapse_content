@@ -31,7 +31,7 @@ module FiatPublication
           format.html { redirect_back(fallback_location: content_blocks_path, notice: 'Block successfully updated.') }
           format.js
         else
-          format.html { render action: "edit" }
+          format.html { redirect_back(fallback_location: content_block_path(@content_block), alert: "Something went wrong.") }
         end
       end
     end

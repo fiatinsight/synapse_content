@@ -33,7 +33,7 @@ module FiatPublication
           format.html { redirect_back(fallback_location: article_path(@article), notice: 'Article successfully updated.') }
           format.js
         else
-          format.html { render action: "edit" }
+          format.html { redirect_back(fallback_location: article_path(@article), alert: "Something went wrong.") }
         end
       end
     end
