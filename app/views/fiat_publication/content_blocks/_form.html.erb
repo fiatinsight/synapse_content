@@ -7,11 +7,11 @@
         <% if content_block.image.attached? %>
           <%= image_tag content_block.image.variant(resize: "500x500"), width: "100%", class: "mb-3" %>
         <% end %>
-        <%= f.input :image, as: :file, id: "#content_block_image_#{content_block.id}", label: "Upload image", input_html: { direct_upload: true } %>
+        <%= f.input :image, as: :file, label: "Upload image", input_html: { direct_upload: true, id: "#content_block_image_#{content_block.id}" } %>
         <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-5 block-upload-image-submit-#{content_block.id}", style: "display: none;" do %><i class="far fa-cloud-upload mr-2"></i>Upload image<% end %>
         <script>
           $(document).ready(function(){
-            $('#content_block_image' + <%= content_block.id %>).change(function(){
+            $('#content_block_image_' + <%= content_block.id %>).change(function(){
               $('.block-upload-image-submit-' + <%= content_block.id %>).css('display', 'block');
             });
           });
