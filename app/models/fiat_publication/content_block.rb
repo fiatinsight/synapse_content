@@ -5,9 +5,9 @@ module FiatPublication
     self.table_name = "fi_content_blocks"
 
     belongs_to :publishable, polymorphic: true
-    # belongs_to :publisher, through: :publishable
 
     has_one_attached :image
+    validates :image, presence: true, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..5.megabytes }
 
     validates :publishable, presence: true
     validates :block_type, presence: true
