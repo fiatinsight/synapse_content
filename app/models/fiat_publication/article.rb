@@ -16,6 +16,8 @@ module FiatPublication
 
     has_one_attached :image
 
+    attribute :remove_image, :boolean
+
     validates :title, presence: true
 
     enum image_placement: {
@@ -26,6 +28,12 @@ module FiatPublication
     scope :published, lambda { where.not(published_at: nil).includes(:author) }
     scope :scheduled, lambda { where("published_at > ?", DateTime.now) }
     scope :visible, lambda { where("published_at <= ?", DateTime.now) }
+
+    after_save :purge_image, if: :remove_image
+
+    def purge_image
+      image.purge
+    end
 
     def is_published?
       if self.published_at

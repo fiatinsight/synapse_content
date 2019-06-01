@@ -31,6 +31,7 @@ module FiatPublication
       respond_to do |format|
         if @article.update_attributes(article_params)
           format.html { redirect_back(fallback_location: article_path(@article), notice: 'Article successfully updated.') }
+          format.js
         else
           format.html { render action: "edit" }
         end
@@ -60,7 +61,7 @@ module FiatPublication
       end
 
       def article_params
-        params.require(:article).permit(:publisher_type, :publisher_id, :title, :slug, :image, :excerpt, :image_placement,
+        params.require(:article).permit(:publisher_type, :publisher_id, :title, :slug, :image, :excerpt, :image_placement, :remove_image,
                                         :published_at)
       end
 
