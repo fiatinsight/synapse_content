@@ -8,11 +8,11 @@
           <%= image_tag content_block.image.variant(resize: "500x500"), width: "100%", class: "mb-3" %>
         <% end %>
         <%= f.input :image, as: :file, label: "Upload image", input_html: { direct_upload: true } %>
-        <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-5 upload-image-submit", style: "display: none;" do %><i class="far fa-cloud-upload mr-2"></i>Upload image<% end %>
+        <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-5 block-upload-image-submit", style: "display: none;" do %><i class="far fa-cloud-upload mr-2"></i>Upload image<% end %>
         <script>
           $(document).ready(function(){
             $('#content_block_image').change(function(){
-              $('.upload-image-submit').css('display', 'block');
+              $('.block-upload-image-submit').css('display', 'block');
             });
           });
         </script>

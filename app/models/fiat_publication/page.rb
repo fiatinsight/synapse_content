@@ -17,6 +17,14 @@ module FiatPublication
 
     validates :title, presence: true
 
+    attribute :remove_image, :boolean
+
+    after_save :purge_image, if: :remove_image
+
+    def purge_image
+      image.purge
+    end
+
     enum image_placement: {
       billboard: 0,
       right: 1
