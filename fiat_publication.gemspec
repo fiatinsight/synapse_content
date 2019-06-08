@@ -16,13 +16,14 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  s.add_dependency "rails", "~> 5.2.1"
+  s.add_dependency "rails", ">= 5.2.1"
   s.add_dependency "trix-rails"
   s.add_dependency "simple_form"
-  s.add_dependency "audited"
+  s.add_dependency "audited", "~> 4.7"
   s.add_dependency "best_in_place"
   s.add_dependency "cocoon"
-  s.add_dependency "activestorage-validator"
+  s.add_dependency "meta-tags"
+  # s.add_dependency "activestorage-validator" # NOTE: This gem is not compatible with Rails 6, so validations on the relevant models are temporarily removed.
   s.add_dependency "jquery-atwho-rails" # This might not really be required...
   # s.add_dependency "fiat_notificiatons"
 
