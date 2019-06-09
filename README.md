@@ -1,6 +1,6 @@
 # Fiat Publication
 
-> Currently installed on [Parish.es](https://github.com/fiatinsight/parish-app) and [Cleveland Mixer](https://github.com/fiatinsight/cleveland-mixer/).
+> Currently installed on [Tekne](https://github.com/fiatinsight/tekne), [Parish.es](https://github.com/fiatinsight/parish-app), and [Cleveland Mixer](https://github.com/fiatinsight/cleveland-mixer/).
 
 This engine is designed to be used by [@fiatinsight](https://fiatinsight.com) developers on Rails projects to speed up development of a custom content system&mdash;like a CMS or CRM.
 
@@ -46,15 +46,13 @@ end
 
 ## Dependencies
 
-The engine supplies minimally formatted output so that you can influence designs within your main application. It requires [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), [audited](https://github.com/collectiveidea/audited), and that you've set up Active Storage in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
+The engine supplies minimally formatted output so that you can influence designs within your main application. It includes dependencies for [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), [audited](https://github.com/collectiveidea/audited). It requires that you've installed [meta-tags](https://github.com/kpumuk/meta-tags) and have set up [Active Storage](https://edgeguides.rubyonrails.org/active_storage_overview.html#setup) in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
 
-It assumes (but doesn't require) that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui), as well as [fiat_notifications](https://github.com/fiatinsight/fiat_notifications).
+> Note: Currently, this engine does not include a dependency for [activestorage-validator](https://github.com/aki77/activestorage-validator) since it does not support Rails 6 integration. The dependency is stubbed out, however, and will be re-introduced when possible.
+
+It assumes&mdash;but doesn't require&mdash;that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui), as well as [fiat_notifications](https://github.com/fiatinsight/fiat_notifications).
 
 > Note: A `User` class is currently required by the `mention_users` method on the `Comment` model. This assumes, too, that `fiat_notifications` is installed, which will eventually be a dependency for this gem.
-
-If you want to handle dynamic, nested forms, you'll need to install the (Cocoon)[https://github.com/nathanvda/cocoon] gem in your main app.
-
-> Note: Cocoon might eventually be brought into this gem as a dependency.
 
 ## Usage
 
