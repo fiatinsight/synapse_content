@@ -1,6 +1,6 @@
 # Fiat Publication
 
-> Currently installed on [Parish.es](https://github.com/fiatinsight/parish-app) and [Cleveland Mixer](https://github.com/fiatinsight/cleveland-mixer/).
+> Currently installed on [Tekne](https://github.com/fiatinsight/tekne), [Parish.es](https://github.com/fiatinsight/parish-app), and [Cleveland Mixer](https://github.com/fiatinsight/cleveland-mixer/).
 
 This engine is designed to be used by [@fiatinsight](https://fiatinsight.com) developers on Rails projects to speed up development of a custom content system&mdash;like a CMS or CRM.
 
