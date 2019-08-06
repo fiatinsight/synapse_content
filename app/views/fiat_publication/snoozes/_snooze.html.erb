@@ -1,7 +1,8 @@
 <%= simple_form_for FiatPublication::Snooze.new do |f| %>
   <%= f.input :snoozable_type, as: :hidden, input_html: { value: params[:snoozable_type] } %>
   <%= f.input :snoozable_id, as: :hidden, input_html: { value: params[:snoozable_id] } %>
-  <%= f.input :snoozer_type, as: :hidden, input_html: { value: params[:snoozer_type] } %>
+  <%= f.input :snoozer_type_class, as: :hidden, input_html: { value: params[:snoozer_type_class] } %>
+  <%= f.input :snoozer_type_method, as: :hidden, input_html: { value: params[:snoozer_type_method] } %>
   <div class="row">
     <% if params[:snoozer_id] %>
       <%= f.input :snoozer_id, as: :hidden, input_html: { value: params[:snoozer_id] } %>
@@ -9,7 +10,7 @@
       <div class="col-12">
         <p class="desc"><i class="far fa-user mr-2"></i>Select a recipient</p>
       </div>
-      <%= f.input :snoozer_id, collection: params[:snoozer_type].constantize.all, input_method: :id, label_method: :fullname, label: false, wrapper_html: { class: 'col-12' } %>
+      <%= f.input :snoozer_id, collection: Class.const_get(params[:snoozer_type_class]).public_send(params[:snoozer_type_method]), input_method: :id, label_method: :fullname, label: false, wrapper_html: { class: 'col-12' } %>
     <% end %>
     <div class="col-12">
       <p class="desc"><i class="far fa-clock mr-2"></i>Set the date and time to unsnooze</p>

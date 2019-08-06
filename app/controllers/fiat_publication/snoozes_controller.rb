@@ -50,7 +50,7 @@ module FiatPublication
       end
 
       def snooze_params
-        params.require(:snooze).permit(:snoozable_id, :snoozable_type, :snoozer_id, :snoozer_type, :unsnooze_date, :unsnooze_time)
+        params.require(:snooze).permit(:snoozable_id, :snoozable_type, :snoozer_id, :snoozer_type_class, :snoozer_type_method, :unsnooze_date, :unsnooze_time)
       end
 
   end
