@@ -188,6 +188,21 @@ Displaying content just requires that you use the typical associations. For exam
 end
 ```
 
+### Extending classes
+
+You can extend classes by using decorators at `/app/decorators/**/*_decorator*.rb`
+
+For example, a file called `/app/decorators/models/fiat_publication/message_decorator.rb` might include:
+
+```ruby
+FiatPublication::Message.class_eval do
+  def new_method
+    # Some code
+  end
+end
+```
+> Note: Be sure to restart your application when introducing decorators
+
 ### Customization
 
 You can use the gem resources directly, or wrap them into custom namespaces, views, and controller logic within your main app. For example, after mounting it within a namespace called `account`, you could create a series of controllers under your `AccountController` to handle provided resources, e.g., `Account::PagesController` or `Account::ArticlesController`. You can do this for some resources or all of them. Make sure to create routes for each resource type you want to handle:
