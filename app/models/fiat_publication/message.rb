@@ -6,15 +6,15 @@ module FiatPublication
 
     self.table_name = "fi_messages"
 
-    belongs_to :publisher, polymorphic: true
-    belongs_to :authorable, polymorphic: true
+    belongs_to :publisher, polymorphic: true, required: false
+    belongs_to :authorable, polymorphic: true, required: false
     has_many :comments, as: :commentable, dependent: :destroy
     has_many :attachments, as: :attachable, dependent: :destroy
     has_many :content_label_assignments, as: :assignable, dependent: :destroy
     has_many :content_labels, through: :content_label_assignments
     has_many :snoozes, as: :snoozable, dependent: :destroy
-    belongs_to :messageable, polymorphic: true
-    belongs_to :owner, polymorphic: true
+    belongs_to :messageable, polymorphic: true, required: false
+    belongs_to :owner, polymorphic: true, required: false
     has_many :custom_fields, as: :publishable, dependent: :destroy, inverse_of: :publishable
     accepts_nested_attributes_for :custom_fields, reject_if: :all_blank, allow_destroy: true
 
