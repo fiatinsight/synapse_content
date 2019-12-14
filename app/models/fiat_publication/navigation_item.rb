@@ -4,9 +4,9 @@ module FiatPublication
 
     self.table_name = "fi_navigation_items"
 
-    belongs_to :publisher, polymorphic: true, touch: true
-    belongs_to :navigation_group
-    belongs_to :navigable, polymorphic: true
+    belongs_to :publisher, polymorphic: true, touch: true, required: false
+    belongs_to :navigation_group, required: false
+    belongs_to :navigable, polymorphic: true, required: false
 
     validates :title, presence: true
 

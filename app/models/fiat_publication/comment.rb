@@ -6,7 +6,7 @@ module FiatPublication
 
     self.table_name = "fi_comments"
 
-    belongs_to :publisher, polymorphic: true
+    belongs_to :publisher, polymorphic: true, required: false
     belongs_to :authorable, polymorphic: true
     belongs_to :commentable, polymorphic: true, touch: true
 
