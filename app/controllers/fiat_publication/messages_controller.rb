@@ -36,7 +36,7 @@ module FiatPublication
                 format.html { redirect_to main_app.send(FiatPublication.new_message_redirect_path, @message), notice: notice }
               end
             else
-              format.html { redirect_back(fallback_location: new_message_path, alert: "Please check your entry and try again.") } #format.html { render action: "new" }
+              format.html { redirect_back(fallback_location: new_message_path, alert: "Please check your entry and try again.") }
             end
           end
         else
