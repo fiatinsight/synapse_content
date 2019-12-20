@@ -14,25 +14,36 @@ module FiatPublication
     def create
       @message = Message.create(message_params)
 
-      respond_to do |format|
-        if @message.save
-          if params[:notice]
-            notice = params[:notice]
-          else
-            notice = 'Your message was created.'
-          end
+      if defined?(verify_recaptcha)
+        success = verify_recaptcha(action: 'create_message', minimum_score: 0.5)
+        checkbox_success = verify_recaptcha unless success
+        if success || checkbox_success
+          respond_to do |format|
+            if @message.save
+              if params[:notice]
+                notice = params[:notice]
+              else
+                notice = 'Your message was created.'
+              end
 
-          if params[:content_label] && FiatPublication::ContentLabel.find_by(name: params[:content_label])
-            FiatPublication::ContentLabelAssignment.create(content_label_id: FiatPublication::ContentLabel.find_by(name: params[:content_label]).id, assignable: @message)
-          end
+              if params[:content_label] && FiatPublication::ContentLabel.find_by(name: params[:content_label])
+                FiatPublication::ContentLabelAssignment.create(content_label_id: FiatPublication::ContentLabel.find_by(name: params[:content_label]).id, assignable: @message)
+              end
 
-          if params[:redirect_path]
-            format.html { redirect_to main_app.send(params[:redirect_path]), notice: notice }
-          else
-            format.html { redirect_to main_app.send(FiatPublication.new_message_redirect_path, @message), notice: notice }
+              if params[:redirect_path]
+                format.html { redirect_to main_app.send(params[:redirect_path]), notice: notice }
+              else
+                format.html { redirect_to main_app.send(FiatPublication.new_message_redirect_path, @message), notice: notice }
+              end
+            else
+              format.html { redirect_back(fallback_location: new_message_path, alert: "Please check your entry and try again.") } #format.html { render action: "new" }
+            end
           end
         else
-          format.html { redirect_back(fallback_location: new_message_path, alert: "Please check your entry and try again.") } #format.html { render action: "new" }
+          if !success
+            @show_checkbox_recaptcha = true
+          end
+          render 'new'
         end
       end
     end

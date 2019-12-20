@@ -14,7 +14,7 @@ module FiatPublication
     has_many :content_labels, through: :content_label_assignments
 
     has_one_attached :image
-    # validates :image, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..5.megabytes }
+    validates :image, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..5.megabytes }
 
     validates :title, presence: true
 
