@@ -49,9 +49,7 @@ end
 
 ## Dependencies
 
-The engine supplies minimally formatted output so that you can influence designs within your main application. It includes dependencies for [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), [audited](https://github.com/collectiveidea/audited). It requires that you've installed [meta-tags](https://github.com/kpumuk/meta-tags) and have set up [Active Storage](https://edgeguides.rubyonrails.org/active_storage_overview.html#setup) in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
-
-> Note: Currently, this engine does not include a dependency for [activestorage-validator](https://github.com/aki77/activestorage-validator) since it does not support Rails 6 integration. The dependency is stubbed out, however, and will be re-introduced when possible.
+The engine supplies minimally formatted output so that you can influence designs within your main application. It includes dependencies for [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), [audited](https://github.com/collectiveidea/audited), [recaptcha](https://github.com/ambethia/recaptcha), [meta-tags](https://github.com/kpumuk/meta-tags), and [activestorage-validator](https://github.com/aki77/activestorage-validator). It requires that you've set up [Active Storage](https://edgeguides.rubyonrails.org/active_storage_overview.html#setup) in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
 
 It assumes&mdash;but doesn't require&mdash;that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui), as well as [fiat_notifications](https://github.com/fiatinsight/fiat_notifications).
 
@@ -118,6 +116,10 @@ Messages enable threaded content, similar to email. Adding comments to messages 
 You only need to supply a `subject` to create a message.
 
 > TODO: This section needs more detail around working with engine-supplied message forms, writing your own forms, including custom fields and labels, etc.
+
+#### reCaptcha v3
+
+Messages allow you to add reCaptcha v3 to your message form. The `create` action checks for the `verify_recaptcha` method and processes it with that if available. The v3 action you include in a new message form must be `create_message`, for example: `= recaptcha_v3(action: 'create_message')`.
 
 ### Attachments
 
