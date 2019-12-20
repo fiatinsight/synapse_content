@@ -27,7 +27,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @content_block.update_attributes(content_block_params)
+        if @content_block.update(content_block_params)
           format.html { redirect_back(fallback_location: content_blocks_path, notice: 'Block successfully updated.') }
           format.js
         else

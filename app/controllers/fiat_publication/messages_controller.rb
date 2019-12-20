@@ -56,7 +56,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @message.update_attributes(message_params)
+        if @message.update(message_params)
           format.html { redirect_back(fallback_location: edit_account_message_path(@message), notice: 'Message successfully updated.') }
         else
           format.html { render action: "edit" }

@@ -29,7 +29,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @page.update_attributes(page_params)
+        if @page.update(page_params)
           format.html { redirect_back(fallback_location: page_path(@page), notice: 'Page successfully updated.') }
           format.js
         else

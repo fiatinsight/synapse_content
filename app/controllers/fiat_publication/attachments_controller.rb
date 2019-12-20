@@ -27,7 +27,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @attachment.update_attributes(attachment_params)
+        if @attachment.update(attachment_params)
           format.html { redirect_back(fallback_location: attachment_path(@attachment), notice: 'Attachment successfully updated.') }
         else
           format.html { render action: "edit" }

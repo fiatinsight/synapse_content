@@ -8,7 +8,7 @@ module Slugable
   def create_slug
     if !self.slug? && self.title
       slug = "#{self.title.split.join('-').downcase}"
-      self.update_attributes(slug: slug)
+      self.update(slug: slug)
     end
   end
 end

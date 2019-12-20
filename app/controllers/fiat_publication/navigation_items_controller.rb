@@ -23,7 +23,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @navigation_item.update_attributes(navigation_item_params)
+        if @navigation_item.update(navigation_item_params)
           format.html { redirect_back(fallback_location: navigation_item_path(@navigation_item), notice: 'Item successfully updated.') }
         else
           format.html { render action: "edit" }

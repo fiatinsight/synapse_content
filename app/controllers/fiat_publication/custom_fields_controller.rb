@@ -28,7 +28,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @custom_field.update_attributes(custom_field_params)
+        if @custom_field.update(custom_field_params)
           format.html { redirect_back(fallback_location: custom_fields_path, notice: 'Field successfully updated.') }
           format.json { respond_with_bip(@custom_field) }
         else

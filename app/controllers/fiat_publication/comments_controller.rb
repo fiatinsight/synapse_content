@@ -31,7 +31,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @comment.update_attributes(comment_params)
+        if @comment.update(comment_params)
           format.html { redirect_back(fallback_location: edit_account_comment_path(@comment), notice: 'Comment successfully updated.') }
         else
           format.html { render action: "edit" }

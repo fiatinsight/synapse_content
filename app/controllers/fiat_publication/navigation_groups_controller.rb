@@ -23,7 +23,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @navigation_group.update_attributes(navigation_group_params)
+        if @navigation_group.update(navigation_group_params)
           format.html { redirect_back(fallback_location: navigation_group_path(@navigation_group), notice: 'Group successfully updated.') }
         else
           format.html { render action: "edit" }

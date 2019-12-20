@@ -23,7 +23,7 @@ module FiatPublication
 
     def update
       respond_to do |format|
-        if @snooze.update_attributes(snooze_params)
+        if @snooze.update(snooze_params)
           format.html { redirect_back(fallback_location: snooze_path(@snooze), notice: 'Snooze updated.') }
         else
           format.html { render action: "edit" }
