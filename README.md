@@ -26,7 +26,7 @@ SynapseContent.configure do |config|
 end
 ```
 
-> Note: For a full list of configuration options, see [here](https://github.com/fiatinsight/synapse_content/blob/master/lib/synapse_content/engine.rb).
+> Note: For a full list of configuration options, see [here](https://github.com/fiatinsight/synapse_content/blob/master/lib/synapse_content/configuration.rb).
 
 Then mount the engine in your `routes.rb` file:
 
