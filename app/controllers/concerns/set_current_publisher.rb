@@ -8,7 +8,7 @@ module SetCurrentPublisher
   private
 
     def current_publisher
-      FiatPublication.publisher_model.to_s
+      SynapseContent.publisher_model.to_s
       # if params[:parish_token]
       #   session[:parish_token] = params[:parish_token]
       # elsif Parish.pluck(:domain).include? Current.domain

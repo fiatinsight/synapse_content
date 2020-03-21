@@ -1,5 +1,5 @@
 class AddPositionToContentBlocks < ActiveRecord::Migration[5.2]
   def change
-    add_column :fi_content_blocks, :position, :integer
+    add_column :synapse_content_blocks, :position, :integer
   end
 end

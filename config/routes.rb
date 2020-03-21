@@ -1,4 +1,4 @@
-FiatPublication::Engine.routes.draw do
+SynapseContent::Engine.routes.draw do
   resources :pages
   resources :articles
   resources :content_blocks

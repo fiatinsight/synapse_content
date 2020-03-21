@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount FiatPublication::Engine => "/fiat_publication"
+  mount SynapseContent::Engine => "/synapse_content"
 end

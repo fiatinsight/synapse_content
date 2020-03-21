@@ -10,7 +10,7 @@ Add this line to your application's `Gemfile`:
 
 ```ruby
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-gem 'fiat_publication', github: 'fiatinsight/fiat_publication'
+gem 'synapse_content', github: 'fiatinsight/synapse_content'
 ```
 
 > For stable release with older applications using this gem prior to November 2019, include `tag: 'v1.1.0'` in the gem dependency.
@@ -19,15 +19,15 @@ Then `bundle` and run the required migrations directly by typing:
 
     $ rake db:migrate
 
-Create an initializer at `config/initializers/fiat_publication.rb` to set any required globals for your implementation. You should set any variables that pertain to parts of the gem you'll want to use. Variables give you the chance to pass namespacing into the engine's actions:
+Create an initializer at `config/initializers/synapse_content.rb` to set any required globals for your implementation. You should set any variables that pertain to parts of the gem you'll want to use. Variables give you the chance to pass namespacing into the engine's actions:
 
 ```ruby
-FiatPublication.new_message_redirect_path = "message_path"
-FiatPublication.new_page_path = "new_admin_page_path"
-FiatPublication.view_page_path = "page_path"
-FiatPublication.new_page_redirect_path = "page_path"
-FiatPublication.new_article_redirect_path = "new_admin_article_path"
-FiatPublication.new_content_block_redirect_path = "content_block_path"
+SynapseContent.new_message_redirect_path = "message_path"
+SynapseContent.new_page_path = "new_admin_page_path"
+SynapseContent.view_page_path = "page_path"
+SynapseContent.new_page_redirect_path = "page_path"
+SynapseContent.new_article_redirect_path = "new_admin_article_path"
+SynapseContent.new_content_block_redirect_path = "content_block_path"
 ```
 
 > Note: This section needs attention to improve the flexibility of the routing, especially with namespaced usage.
@@ -35,14 +35,14 @@ FiatPublication.new_content_block_redirect_path = "content_block_path"
 Then mount the engine in your `routes.rb` file:
 
 ```ruby
-mount FiatPublication::Engine => "/publication"
+mount SynapseContent::Engine => "/publication"
 ```
 
 You can also mount the engine within a namespace, for example:
 
 ```ruby
 namespace :account do
-  mount FiatPublication::Engine => "/publication"
+  mount SynapseContent::Engine => "/publication"
   # More routes here...
 end
 ```
@@ -64,16 +64,16 @@ This engine supplies a variety of content types that can be invoked in custom co
 Pages and articles are basic content types. Pages are intended for more permanent content, and articles are designed to be more transient / ephemeral. You can invoke a new page with:
 
 ```ruby
-= link_to send("#{FiatPublication.new_page_path}", publisher_type: nil, publisher_id: nil)
+= link_to send("#{SynapseContent.new_page_path}", publisher_type: nil, publisher_id: nil)
 ```
 
 Editing a page requires a little more information. Create a view partial with the following information:
 
 ```ruby
 locals = {
-  page: FiatPublication::Page.find(params[:id]),
-  page_update_url: account_fiat_publication.page_path,
-  new_content_block_url: account_fiat_publication.new_content_block_path(publishable_type: 'FiatPublication::Page', publishable_id: params[:id]),
+  page: SynapseContent::Page.find(params[:id]),
+  page_update_url: account_synapse_content.page_path,
+  new_content_block_url: account_synapse_content.new_content_block_path(publishable_type: 'SynapseContent::Page', publishable_id: params[:id]),
   content_block_path: '/account/publication/content_blocks',
   btn_classes: 'btn btn-success layer-1',
   nested_parent_id: nil, # Identify a parent resource in a nested setup
@@ -81,7 +81,7 @@ locals = {
   publisher_id: nil
   }
 
-= render partial: 'fiat_publication/pages/edit', locals: locals
+= render partial: 'synapse_content/pages/edit', locals: locals
 ```
 
 > TODO: This section needs considerably more detail around working with engine-supplied page and article forms, writing your own forms, required parameters, routing options, etc.
@@ -95,7 +95,7 @@ You can also extend a similar relationship to any model(s) in your main app. For
 ```ruby
 class MyPage < ApplicationRecord
   # ...
-  has_many :fiat_publication_content_blocks, as: :publishable, class_name: 'FiatPublication::ContentBlock'
+  has_many :synapse_content_content_blocks, as: :publishable, class_name: 'SynapseContent::ContentBlock'
 end
 ```
 
@@ -125,7 +125,7 @@ Messages allow you to add reCaptcha v3 to your message form. The `create` action
 
 Attachments are standalone content objects that use Active Storage to store files.
 
-> TODO: This content type is undeveloped. Extrapolating current attachment logic, routing, etc., in conjunction w/ best practice Active Storage use is required. (See [this issue](https://github.com/fiatinsight/fiat_publication/issues/6).)
+> TODO: This content type is undeveloped. Extrapolating current attachment logic, routing, etc., in conjunction w/ best practice Active Storage use is required. (See [this issue](https://github.com/fiatinsight/synapse_content/issues/6).)
 
 ### Custom fields
 
@@ -137,14 +137,14 @@ Content labels are designed to work like Gmail labels: They're flattened objects
 
 ### Navigation
 
-> TODO: Navigation items and groups, drawing in engine classes, need to be extrapolated from current use. (See [this issue](https://github.com/fiatinsight/fiat_publication/issues/5).)
+> TODO: Navigation items and groups, drawing in engine classes, need to be extrapolated from current use. (See [this issue](https://github.com/fiatinsight/synapse_content/issues/5).)
 
 ## Snoozing
 
 Snoozing is available for messages, by default. You can create a link to snooze something like this:
 
 ```ruby
-= link_to "Snooze this", fiat_publication.new_snooze_path(snoozable_type: "FiatPublication::Message", snoozable_id: @message.id, snoozer_type: "User", snoozer_id: current_user.id), remote: true
+= link_to "Snooze this", synapse_content.new_snooze_path(snoozable_type: "SynapseContent::Message", snoozable_id: @message.id, snoozer_type: "User", snoozer_id: current_user.id), remote: true
 ```
 
 Set up automatic unsnoozing in your Heroku app using `rake unsnooze_things` in a cron scheduler.
@@ -156,8 +156,8 @@ Content can optionally be assigned to a polymorphic `publisher` as a class from 
 ```ruby
 class Organization < ApplicationRecord
   # ...
-  has_many :fi_pages, as: :publisher, class_name: 'FiatPublication::Page'
-  has_many :fi_articles, as: :publisher, class_name: 'FiatPublication::Article'
+  has_many :synapse_pages, as: :publisher, class_name: 'SynapseContent::Page'
+  has_many :synapse_articles, as: :publisher, class_name: 'SynapseContent::Article'
 end
 ```
 
@@ -168,22 +168,22 @@ end
 Depending on where you mount the engine, routing to its resources will work differently. For example, within an `account` namespace, a new content block could be created using something like:
 
 ```ruby
-link_to "New block", account_fiat_publication.new_content_block_path(publishable_type: "Page", publishable_id: @page.id)
+link_to "New block", account_synapse_content.new_content_block_path(publishable_type: "Page", publishable_id: @page.id)
 ```
 
 ### Updating items
 
-In this case, updating content would require passing in the full namespace so that `fiat_publication` can handle a nested path helper in its forms. That means including the object you want to work with, e.g., setting a `content_block` variable, as well as the `url` variable of the path you want to work with:
+In this case, updating content would require passing in the full namespace so that `synapse_content` can handle a nested path helper in its forms. That means including the object you want to work with, e.g., setting a `content_block` variable, as well as the `url` variable of the path you want to work with:
 
 ```ruby
-content_block = FiatPublication::ContentBlock.find(your_content_block_id)
-= render partial: 'fiat_publication/content_blocks/form', locals: { content_block: content_block, url: account_fiat_publication.content_block_path(content_block) }
+content_block = SynapseContent::ContentBlock.find(your_content_block_id)
+= render partial: 'synapse_content/content_blocks/form', locals: { content_block: content_block, url: account_synapse_content.content_block_path(content_block) }
 ```
 
 Creating a new entry would take similar arguments:
 
 ```ruby
-= render partial: 'fiat_publication/messages/new', locals: { message: FiatPublication::Message.new, url: account_fiat_publication.messages_path }
+= render partial: 'synapse_content/messages/new', locals: { message: SynapseContent::Message.new, url: account_synapse_content.messages_path }
 # Note the use of content_blocks_path and not new_content_block_path
 ```
 
@@ -192,13 +192,13 @@ Creating a new entry would take similar arguments:
 In addition to the default redirect variables in your initializer, you can alternatively pass a `redirect_path` variable within the `url` parameter of a form. This processes using the `send()` function, so you can write it like this:
 
 ```ruby
-= render partial: 'fiat_publication/messages/new', locals: { message: FiatPublication::Message.new, url: account_fiat_publication.messages_path(redirect_path: root_path) }
+= render partial: 'synapse_content/messages/new', locals: { message: SynapseContent::Message.new, url: account_synapse_content.messages_path(redirect_path: root_path) }
 ```
 
 Or like this:
 
 ```ruby
-= render partial: 'fiat_publication/messages/new', locals: { message: FiatPublication::Message.new, url: account_fiat_publication.messages_path(redirect_path: "'account_fiat_publication.message_path', @message") }
+= render partial: 'synapse_content/messages/new', locals: { message: SynapseContent::Message.new, url: account_synapse_content.messages_path(redirect_path: "'account_synapse_content.message_path', @message") }
 ```
 
 ### Notices
@@ -206,16 +206,16 @@ Or like this:
 You can pass a `notice` variable in the `url` parameter, too:
 
 ```ruby
-= render partial: 'fiat_publication/messages/new', locals: { message: FiatPublication::Message.new, url: account_fiat_publication.messages_path(redirect_path: root_path, notice: "That was awesome. Well done!") }
+= render partial: 'synapse_content/messages/new', locals: { message: SynapseContent::Message.new, url: account_synapse_content.messages_path(redirect_path: root_path, notice: "That was awesome. Well done!") }
 ```
 
 ### Displaying items
 
-Displaying content just requires that you use the typical associations. For example, if you wanted to display the default partial for a content block provided by `fiat_publication` you could put:
+Displaying content just requires that you use the typical associations. For example, if you wanted to display the default partial for a content block provided by `synapse_content` you could put:
 
 ```ruby
-@page.fiat_publication_content_blocks.each do |i|
-  = render partial: 'fiat_publication/content_blocks/show', locals: { content_block: i, my_classes: 'custom_classes_here' }
+@page.synapse_content_content_blocks.each do |i|
+  = render partial: 'synapse_content/content_blocks/show', locals: { content_block: i, my_classes: 'custom_classes_here' }
 end
 ```
 
@@ -223,10 +223,10 @@ end
 
 You can extend classes by using decorators at `/app/decorators/**/*_decorator*.rb`
 
-For example, a file called `/app/decorators/models/fiat_publication/message_decorator.rb` might include:
+For example, a file called `/app/decorators/models/synapse_content/message_decorator.rb` might include:
 
 ```ruby
-FiatPublication::Message.class_eval do
+SynapseContent::Message.class_eval do
   def new_method
     # Some code
   end
@@ -240,7 +240,7 @@ You can use the gem resources directly, or wrap them into custom namespaces, vie
 
 ```ruby
 namespace :account do
-  mount FiatPublication::Engine => "/publication"
+  mount SynapseContent::Engine => "/publication"
   resources :pages
   resources :articles
 end
@@ -249,20 +249,20 @@ end
 You'll also need to add variables to your initializer file to tell the gem how to handle redirects for different content types. For example, with the `account` namespace, you might set:
 
 ```ruby
-FiatPublication.new_content_block_redirect_path = "account_content_block_path"
+SynapseContent.new_content_block_redirect_path = "account_content_block_path"
 ```
 
 The gem will provide arguments for your paths based on the resource type. But it can't pick up the namespace conventions you set in your main app without a little help.
 
 ## Development
 
-To build this gem for the first time, run `gem build fiat_publication.gemspec` from the project folder.
+To build this gem for the first time, run `gem build synapse_content.gemspec` from the project folder.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/fiatinsight/fiat_publication.
+Bug reports and pull requests are welcome on GitHub at https://github.com/fiatinsight/synapse_content.
 
 ## License
 

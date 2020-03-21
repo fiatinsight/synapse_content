@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fiat_publication (0.1.1)
+    synapse_content (0.1.1)
       activestorage-validator
       audited (~> 4.7)
       best_in_place
@@ -164,7 +164,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  fiat_publication!
+  synapse_content!
   sqlite3
 
 BUNDLED WITH

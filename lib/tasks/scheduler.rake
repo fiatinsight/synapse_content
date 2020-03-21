@@ -4,5 +4,5 @@
 desc "Unsnooze all the things"
 task unsnooze_things: :environment do
   puts "Unsnoozing all the things..."
-  FiatPublication::SnoozesController.new.auto_unsnooze
+  SynapseContent::SnoozesController.new.auto_unsnooze
 end

@@ -3,7 +3,7 @@ require_relative 'boot'
 require 'rails/all'
 
 Bundler.require(*Rails.groups)
-require "fiat_publication"
+require "synapse_content"
 
 module Dummy
   class Application < Rails::Application

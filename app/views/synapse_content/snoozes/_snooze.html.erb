@@ -1,0 +1,24 @@
+<%= simple_form_for SynapseContent::Snooze.new do |f| %>
+  <%= f.input :snoozable_type, as: :hidden, input_html: { value: params[:snoozable_type] } %>
+  <%= f.input :snoozable_id, as: :hidden, input_html: { value: params[:snoozable_id] } %>
+  <%= f.input :snoozer_type_class, as: :hidden, input_html: { value: params[:snoozer_type_class] } %>
+  <%= f.input :snoozer_type_method, as: :hidden, input_html: { value: params[:snoozer_type_method] } %>
+  <div class="row">
+    <% if params[:snoozer_id] %>
+      <%= f.input :snoozer_id, as: :hidden, input_html: { value: params[:snoozer_id] } %>
+    <% else %>
+      <div class="col-12">
+        <p class="desc"><i class="far fa-user mr-2"></i>Select a recipient</p>
+      </div>
+      <%= f.input :snoozer_id, collection: Class.const_get(params[:snoozer_type_class]).public_send(params[:snoozer_type_method]), input_method: :id, label_method: :fullname, label: false, wrapper_html: { class: 'col-12' } %>
+    <% end %>
+    <div class="col-12">
+      <p class="desc"><i class="far fa-clock mr-2"></i>Set the date and time to unsnooze</p>
+    </div>
+    <%= f.input :unsnooze_date, label: false, as: :date, html5: true, wrapper_html: { class: 'col-lg-5' } %>
+    <%= f.input :unsnooze_time, label: false, collection: [["6 AM","06:00:00"],["8 AM","08:00:00"],["10 AM","10:00:00"],["12 PM","12:00:00"],["3 PM","15:00:00"],["6 PM","18:00:00"]], wrapper_html: { class: 'col-lg-4' }, include_blank: false %>
+    <div class="col-lg-3">
+      <%= f.button :button, type: :submit, class: 'btn btn-block btn-primary' do %><i class="far fa-check mr-2"></i>Save<% end %>
+    </div>
+  </div>
+<% end %>
