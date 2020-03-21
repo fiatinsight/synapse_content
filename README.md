@@ -1,17 +1,16 @@
 # Synapse Content
 
-This engine is designed to be used by [@fiatinsight](https://github.com/fiatinsight/) developers on Rails projects to speed up development of a custom content system &mdash; like a CMS or CRM.
+A gem for managing content with [@fiatinsight](https://github.com/fiatinsight/)'s Synapse product.
 
-## Installation
+## Getting started
 
 Add this line to your application's `Gemfile`:
 
 ```ruby
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-gem 'synapse_content', github: 'fiatinsight/synapse_content'
+source "https://rubygems.pkg.github.com/fiatinsight" do
+  gem "synapse_content"
+end
 ```
-
-> For stable release with older applications using this gem prior to November 2019, include `tag: 'v1.1.0'` in the gem dependency.
 
 Then `bundle` and run the required migrations directly by typing:
 
@@ -20,27 +19,26 @@ Then `bundle` and run the required migrations directly by typing:
 Create an initializer at `config/initializers/synapse_content.rb` to set any required globals for your implementation. You should set any variables that pertain to parts of the gem you'll want to use. Variables give you the chance to pass namespacing into the engine's actions:
 
 ```ruby
-SynapseContent.new_message_redirect_path = "message_path"
-SynapseContent.new_page_path = "new_admin_page_path"
-SynapseContent.view_page_path = "page_path"
-SynapseContent.new_page_redirect_path = "page_path"
-SynapseContent.new_article_redirect_path = "new_admin_article_path"
-SynapseContent.new_content_block_redirect_path = "content_block_path"
+SynapseContent.configure do |config|
+  config.new_message_redirect_path = "my_namespace_path"
+  config.new_page_path = "my_namespace_path"
+  config.view_page_path = "my_namespace_path"
+end
 ```
 
-> Note: This section needs attention to improve the flexibility of the routing, especially with namespaced usage.
+> Note: For a full list of configuration options, see [here](https://github.com/fiatinsight/synapse_content/blob/master/lib/synapse_content/engine.rb).
 
 Then mount the engine in your `routes.rb` file:
 
 ```ruby
-mount SynapseContent::Engine => "/publication"
+mount SynapseContent::Engine => "/content"
 ```
 
 You can also mount the engine within a namespace, for example:
 
 ```ruby
 namespace :account do
-  mount SynapseContent::Engine => "/publication"
+  mount SynapseContent::Engine => "/content"
   # More routes here...
 end
 ```

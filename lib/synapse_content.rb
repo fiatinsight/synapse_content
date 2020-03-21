@@ -1,33 +1,21 @@
+# See: http://lizabinante.com/blog/creating-a-configurable-ruby-gem/
+require 'synapse_content/configuration'
 require "synapse_content/engine"
 
 module SynapseContent
+  class << self
+    attr_accessor :configuration
+  end
 
-  # Pages
-  mattr_accessor :pages_path
-  mattr_accessor :new_page_path
-  mattr_accessor :new_page_redirect_path
-  mattr_accessor :view_page_path
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
 
-  # Articles
-  mattr_accessor :articles_path
-  mattr_accessor :new_article_path
-  mattr_accessor :new_article_redirect_path
-  mattr_accessor :view_article_path
+  def self.reset
+    @configuration = Configuration.new
+  end
 
-  # Attachments
-  mattr_accessor :attachments_path
-  mattr_accessor :new_attachment_redirect_path
-
-  # Navigation Groups
-  mattr_accessor :navigation_groups_path
-  mattr_accessor :new_navigation_group_path
-  mattr_accessor :new_navigation_group_redirect_path
-
-  # Navigation Items
-  mattr_accessor :navigation_items_path
-  mattr_accessor :new_navigation_item_path
-  mattr_accessor :new_navigation_item_redirect_path
-
-  # Messages
-  mattr_accessor :new_message_redirect_path
+  def self.configure
+    yield(configuration)
+  end
 end
