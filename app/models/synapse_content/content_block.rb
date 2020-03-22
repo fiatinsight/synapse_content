@@ -9,6 +9,8 @@ module SynapseContent
     has_one_attached :image
     # validates :image, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..5.megabytes }
 
+    has_rich_text :text_content
+
     validates :publishable, presence: true
     validates :block_type, presence: true
 

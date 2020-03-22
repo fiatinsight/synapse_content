@@ -1,8 +1,9 @@
 <%= simple_form_for content_block, url: url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
   <div class="row">
     <div class="col-12">
+      <%= render partial: 'layouts/synapse_ui/components/autosave-status' %>
       <% if content_block.text? %>
-        <%= f.trix_editor :text_content, placeholder: "Type page content here...", data: { action: "change->autosave#save keyup->autosave#save" } %>
+        <%= f.rich_text_area :text_content, placeholder: "Type page content here...", data: { action: "change->autosave#save keyup->autosave#save" } %>
       <% elsif content_block.image? %>
         <% if content_block.image.attached? %>
           <%= image_tag content_block.image.variant(resize: "500x500"), width: "100%", class: "mb-3" %>
