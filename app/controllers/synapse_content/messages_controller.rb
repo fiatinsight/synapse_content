@@ -33,7 +33,7 @@ module SynapseContent
               if params[:redirect_path]
                 format.html { redirect_to main_app.send(params[:redirect_path]), notice: notice }
               else
-                format.html { redirect_to main_app.send(SynapseContent.new_message_redirect_path, @message), notice: notice }
+                format.html { redirect_to main_app.send(SynapseContent.configuration.new_message_redirect_path, @message), notice: notice }
               end
             else
               format.html { redirect_back(fallback_location: new_message_path, alert: "Please check your entry and try again.") }

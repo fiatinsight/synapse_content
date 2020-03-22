@@ -17,7 +17,7 @@ module SynapseContent
 
       respond_to do |format|
         if @page.save
-          format.html { redirect_to main_app.send(SynapseContent.new_page_redirect_path, @page), notice: 'Page was created.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.new_page_redirect_path, @page), notice: 'Page was created.' }
         else
           format.html { render action: "new" }
         end
@@ -47,9 +47,9 @@ module SynapseContent
 
       respond_to do |format|
         if params[:nested_parent_id]
-          format.html { redirect_to main_app.send(SynapseContent.pages_path, params[:nested_parent_id]), notice: 'Page was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.pages_path, params[:nested_parent_id]), notice: 'Page was successfully deleted.' }
         else
-          format.html { redirect_to main_app.send(SynapseContent.pages_path), notice: 'Page was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.pages_path), notice: 'Page was successfully deleted.' }
         end
       end
     end

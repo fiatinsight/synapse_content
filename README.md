@@ -1,5 +1,8 @@
 # Synapse Content
 
+- Add direct upload JS / CSS
+- Add CORS policy to S3 bucket to support direct uploads
+
 A gem for managing content with [@fiatinsight](https://github.com/fiatinsight/)'s Synapse product.
 
 ## Getting started
@@ -60,7 +63,7 @@ This engine supplies a variety of content types that can be invoked in custom co
 Pages and articles are basic content types. Pages are intended for more permanent content, and articles are designed to be more transient / ephemeral. You can invoke a new page with:
 
 ```ruby
-= link_to send("#{SynapseContent.new_page_path}", publisher_type: nil, publisher_id: nil)
+= link_to send("#{SynapseContent.configuration.new_page_path}", publisher_type: nil, publisher_id: nil)
 ```
 
 Editing a page requires a little more information. Create a view partial with the following information:
@@ -245,7 +248,7 @@ end
 You'll also need to add variables to your initializer file to tell the gem how to handle redirects for different content types. For example, with the `account` namespace, you might set:
 
 ```ruby
-SynapseContent.new_content_block_redirect_path = "account_content_block_path"
+SynapseContent.configuration.new_content_block_redirect_path = "account_content_block_path"
 ```
 
 The gem will provide arguments for your paths based on the resource type. But it can't pick up the namespace conventions you set in your main app without a little help.

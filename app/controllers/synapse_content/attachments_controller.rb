@@ -15,7 +15,7 @@ module SynapseContent
 
       respond_to do |format|
         if @attachment.save
-          format.html { redirect_to main_app.send(SynapseContent.new_attachment_redirect_path, @attachment), notice: 'Attachment was created.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.new_attachment_redirect_path, @attachment), notice: 'Attachment was created.' }
         else
           format.html { render action: "new" }
         end
@@ -40,9 +40,9 @@ module SynapseContent
 
       respond_to do |format|
         if params[:nested_parent_id]
-          format.html { redirect_to main_app.send(SynapseContent.attachments_path, params[:nested_parent_id]), notice: 'Attachment was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.attachments_path, params[:nested_parent_id]), notice: 'Attachment was successfully deleted.' }
         else
-          format.html { redirect_to main_app.send(SynapseContent.attachments_path), notice: 'Attachment was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.attachments_path), notice: 'Attachment was successfully deleted.' }
         end
       end
     end

@@ -11,7 +11,7 @@ module SynapseContent
 
       respond_to do |format|
         if @navigation_item.save
-          format.html { redirect_to main_app.send(SynapseContent.new_navigation_item_redirect_path, @navigation_item), notice: 'Item was created.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.new_navigation_item_redirect_path, @navigation_item), notice: 'Item was created.' }
         else
           format.html { render action: "new" }
         end
@@ -36,9 +36,9 @@ module SynapseContent
 
       respond_to do |format|
         if params[:nested_parent_id]
-          format.html { redirect_to main_app.send(SynapseContent.navigation_items_path, params[:nested_parent_id]), notice: 'Item was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.navigation_items_path, params[:nested_parent_id]), notice: 'Item was successfully deleted.' }
         else
-          format.html { redirect_to main_app.send(SynapseContent.navigation_items_path), notice: 'Item was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.navigation_items_path), notice: 'Item was successfully deleted.' }
         end
       end
     end

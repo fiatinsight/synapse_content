@@ -17,7 +17,7 @@ module SynapseContent
 
       respond_to do |format|
         if @article.save
-          format.html { redirect_to main_app.send(SynapseContent.new_article_redirect_path, @article), notice: 'Article was created.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.new_article_redirect_path, @article), notice: 'Article was created.' }
         else
           format.html { render action: "new" }
         end
@@ -47,9 +47,9 @@ module SynapseContent
 
       respond_to do |format|
         if params[:nested_parent_id]
-          format.html { redirect_to main_app.send(SynapseContent.articles_path, params[:nested_parent_id]), notice: 'Article was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.articles_path, params[:nested_parent_id]), notice: 'Article was successfully deleted.' }
         else
-          format.html { redirect_to main_app.send(SynapseContent.articles_path), notice: 'Article was successfully deleted.' }
+          format.html { redirect_to main_app.send(SynapseContent.configuration.articles_path), notice: 'Article was successfully deleted.' }
         end
       end
     end
