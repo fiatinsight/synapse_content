@@ -2,6 +2,8 @@ module SynapseContent
   class Attachment < ApplicationRecord
     include Tokenable
 
+    attr_accessor :edit_redirect_path, :edit_redirect_variable, :destroy_redirect_path, :destroy_redirect_variable
+
     self.table_name = "synapse_attachments"
 
     belongs_to :publisher, polymorphic: true, required: false

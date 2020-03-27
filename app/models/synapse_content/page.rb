@@ -4,6 +4,8 @@ module SynapseContent
     audited
     has_associated_audits
 
+    attr_accessor :edit_redirect_path, :edit_redirect_variable, :destroy_redirect_path, :destroy_redirect_variable
+
     self.table_name = "synapse_pages"
 
     belongs_to :publisher, polymorphic: true, required: false
@@ -16,7 +18,7 @@ module SynapseContent
     has_one_attached :image
     # validates :image, blob: { content_type: ['image/png', 'image/jpg', 'image/jpeg'], size_range: 0..5.megabytes }
 
-    validates :title, presence: true
+    validates :title, :image_placement, presence: true
 
     attribute :remove_image, :boolean
 

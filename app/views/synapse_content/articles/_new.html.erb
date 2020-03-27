@@ -3,6 +3,9 @@
     <%= simple_form_for article, url: url do |f| %>
       <%= f.input :publisher_type, as: :hidden, input_html: { value: publisher_type } %>
       <%= f.input :publisher_id, as: :hidden, input_html: { value: publisher_id } %>
+      <%= f.input :edit_redirect_path, as: :hidden, input_html: { value: edit_redirect_path } %>
+      <%= f.input :edit_redirect_variable, as: :hidden, input_html: { value: edit_redirect_variable } %>
+      <%= f.input :image_placement, as: :hidden, input_html: { value: 'billboard' } %>
       <div class="row">
         <%= f.input :title, label: false, placeholder: "Title (required)", wrapper_html: { class: 'col-12' } %>
         <div class="col-12">

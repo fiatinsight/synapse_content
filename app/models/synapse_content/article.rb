@@ -4,6 +4,8 @@ module SynapseContent
     # audited
     # has_associated_audits
 
+    attr_accessor :edit_redirect_path, :edit_redirect_variable, :destroy_redirect_path, :destroy_redirect_variable
+
     self.table_name = "synapse_articles"
 
     belongs_to :publisher, polymorphic: true, required: false
@@ -19,7 +21,7 @@ module SynapseContent
 
     attribute :remove_image, :boolean
 
-    validates :title, presence: true
+    validates :title, :image_placement, presence: true
 
     enum image_placement: {
       billboard: 0,

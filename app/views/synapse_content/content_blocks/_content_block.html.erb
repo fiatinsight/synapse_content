@@ -3,15 +3,15 @@
   <%= f.input :publishable_id, as: :hidden, input_html: { value: params[:publishable_id] } %>
   <%#= f.input :position, as: :hidden, input_html: { value: 0 } %>
   <div class="row justify-content-center">
-    <div class="col-lg-6">
+    <div class="col-12">
       <p class="desc">What type of content would you like to add?</p>
     </div>
   </div>
   <div class="row justify-content-center">
-    <%= f.input :block_type, label: false, collection: SynapseContent::ContentBlock.block_types.keys.map { |w| [w.humanize, w] }, prompt: "Select type", wrapper_html: { class: 'col-lg-6' } %>
+    <%= f.input :block_type, label: false, collection: SynapseContent::ContentBlock.block_types.keys.map { |w| [w.humanize, w] }, prompt: "Select type", wrapper_html: { class: 'col-12' } %>
   </div>
   <div class="row justify-content-center">
-    <div class="col-lg-6">
+    <div class="col-12">
       <%= f.button :button, type: :submit, class: 'btn btn-secondary' do %>Create block<% end %>
     </div>
   </div>

@@ -17,7 +17,11 @@ module SynapseContent
 
       respond_to do |format|
         if @article.save
-          format.html { redirect_to main_app.send(SynapseContent.configuration.new_article_redirect_path, @article), notice: 'Article was created.' }
+          if params[:article][:edit_redirect_variable].blank?
+            format.html { redirect_to main_app.send(params[:article][:edit_redirect_path], @article), notice: 'Article created.' }
+          else
+            format.html { redirect_to main_app.send(params[:article][:edit_redirect_path], eval(params[:article][:edit_redirect_variable])), notice: 'Article created.' }
+          end
         else
           format.html { render action: "new" }
         end
@@ -30,7 +34,7 @@ module SynapseContent
     def update
       respond_to do |format|
         if @article.update(article_params)
-          format.html { redirect_back(fallback_location: article_path(@article), notice: 'Article successfully updated.') }
+          format.html { redirect_back(fallback_location: article_path(@article), notice: 'Article updated.') }
           format.js
         else
           format.html { redirect_back(fallback_location: article_path(@article), alert: "Something went wrong.") }
@@ -46,10 +50,10 @@ module SynapseContent
       @article.destroy
 
       respond_to do |format|
-        if params[:nested_parent_id]
-          format.html { redirect_to main_app.send(SynapseContent.configuration.articles_path, params[:nested_parent_id]), notice: 'Article was successfully deleted.' }
+        if params[:destroy_redirect_variable].blank?
+          format.html { redirect_to main_app.send(params[:destroy_redirect_path], @article), notice: 'Article deleted.' }
         else
-          format.html { redirect_to main_app.send(SynapseContent.configuration.articles_path), notice: 'Article was successfully deleted.' }
+          format.html { redirect_to main_app.send(params[:destroy_redirect_path], eval(params[:destroy_redirect_variable])), notice: 'Article deleted.' }
         end
       end
     end
@@ -61,8 +65,7 @@ module SynapseContent
       end
 
       def article_params
-        params.require(:article).permit(:publisher_type, :publisher_id, :title, :slug, :image, :excerpt, :image_placement, :remove_image,
-                                        :published_at)
+        params.require(:article).permit(:publisher_type, :publisher_id, :title, :slug, :image, :excerpt, :image_placement, :remove_image, :published_at, :edit_redirect_path, :edit_redirect_variable, :destroy_redirect_path, :destroy_redirect_variable)
       end
 
   end

@@ -29,7 +29,7 @@ SynapseContent.configure do |config|
 end
 ```
 
-> Note: For a full list of configuration options, see [here](https://github.com/fiatinsight/synapse_content/blob/master/lib/synapse_content/configuration.rb).
+> Note: For a full list of configuration options, see [here](https://github.com/fiatinsight/synapse_content/blob/master/lib/synapse_content/configuration.rb). *This is being deprecated* in favor of custom redirect paths and variables within form helpers, for example [here](https://github.com/fiatinsight/synapse_content/blob/master/app/views/synapse_content/articles/_new.html.erb).
 
 Then mount the engine in your `routes.rb` file:
 
@@ -60,30 +60,50 @@ This engine supplies a variety of content types that can be invoked in custom co
 
 ### Pages and articles
 
-Pages and articles are basic content types. Pages are intended for more permanent content, and articles are designed to be more transient / ephemeral. You can invoke a new page with:
+#### Creating
+
+Pages and articles are basic content types. Pages are intended for more permanent content, and articles are designed to be more transient / ephemeral. You can invoke a new page or article by pointing to:
 
 ```ruby
-= link_to send("#{SynapseContent.configuration.new_page_path}", publisher_type: nil, publisher_id: nil)
+= link_to send("your_new_article_path", publisher_type: nil, publisher_id: nil)
 ```
 
-Editing a page requires a little more information. Create a view partial with the following information:
+You'll need to create a custom `new.html.erb` file in your app at the relevant location, and include the following variables / partial:
 
 ```ruby
 locals = {
-  page: SynapseContent::Page.find(params[:id]),
-  page_update_url: account_synapse_content.page_path,
-  new_content_block_url: account_synapse_content.new_content_block_path(publishable_type: 'SynapseContent::Page', publishable_id: params[:id]),
-  content_block_path: '/account/publication/content_blocks',
-  btn_classes: 'btn btn-success layer-1',
-  nested_parent_id: nil, # Identify a parent resource in a nested setup
-  publisher_type: nil,
-  publisher_id: nil
-  }
+    article: SynapseContent::Article.new,
+    url: synapse_content.articles_path,
+    publisher_type: params[:publisher_type],
+    publisher_id: params[:publisher_id],
+    btn_classes: 'btn btn-primary',
+    edit_redirect_path: 'example_path',
+    edit_redirect_variable: 'Current.organization' # Optional; set to `nil` to use @article after create action
+    }
 
-= render partial: 'synapse_content/pages/edit', locals: locals
+= render partial: 'synapse_content/articles/new', locals: locals
 ```
 
-> TODO: This section needs considerably more detail around working with engine-supplied page and article forms, writing your own forms, required parameters, routing options, etc.
+#### Editing
+
+Editing an article or page requires a little more information. Create an `edit.html.erb` view with the following information:
+
+```ruby
+locals = {
+  page: SynapseContent::Article.find(params[:id]),
+  article_update_url: synapse_content.article_path,
+  new_content_block_url: synapse_content.new_content_block_path(publishable_type: 'SynapseContent::Page', publishable_id: params[:id]),
+  content_block_path: '/publication/content_blocks', # Local
+  btn_classes: 'btn btn-success',
+  nested_parent_id: nil, # Can be deprecated?
+  publisher_type: nil,
+  publisher_id: nil,
+  destroy_redirect_path: 'example_path',
+  destroy_redirect_variable: 'Current.organization' # Optional; set to `nil` for @article
+  }
+
+= render partial: 'synapse_content/articles/edit', locals: locals
+```
 
 ### Content blocks
 

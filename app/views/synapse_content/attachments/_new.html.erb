@@ -3,6 +3,8 @@
     <%= simple_form_for attachment, url: url do |f| %>
       <%= f.input :publisher_type, as: :hidden, input_html: { value: publisher_type } %>
       <%= f.input :publisher_id, as: :hidden, input_html: { value: publisher_id } %>
+      <%= f.input :edit_redirect_path, as: :hidden, input_html: { value: edit_redirect_path } %>
+      <%= f.input :edit_redirect_variable, as: :hidden, input_html: { value: edit_redirect_variable } %>
       <div class="row">
         <div class="col-8 primary">
           <%= f.input :title, label: false, placeholder: "Title" %>
