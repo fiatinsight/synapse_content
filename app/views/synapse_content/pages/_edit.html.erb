@@ -84,7 +84,7 @@
           <%= render partial: 'synapse_content/content_labels/checklist', locals: { labels: SynapseContent::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).order("name ASC").all, assignable: page } %>
         </div>
         <div class="mt-5">
-          <%= link_to "#{page_update_url}?nested_parent_id=#{nested_parent_id}&redirect_path=#{destroy_redirect_path}&redirect_variable=#{destroy_redirect_variable}", method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
+          <%= link_to "#{page_update_url}?nested_parent_id=#{nested_parent_id}&destroy_redirect_path=#{destroy_redirect_path}&destroy_redirect_variable=#{destroy_redirect_variable}", method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
             <i class="far fa-trash mr-2"></i>Delete this page
           <% end %>
         </div>

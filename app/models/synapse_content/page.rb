@@ -1,6 +1,7 @@
 module SynapseContent
   class Page < ApplicationRecord
     include Tokenable
+    include Slugable
     audited
     has_associated_audits
 

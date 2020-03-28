@@ -1,6 +1,5 @@
 module SynapseContent
   class ArticlesController < ActionController::Base
-    # include ActionView::Helpers::TextHelper
     before_action :set_article, only: [:show, :edit, :update, :destroy]
 
     def index
@@ -51,7 +50,7 @@ module SynapseContent
 
       respond_to do |format|
         if params[:destroy_redirect_variable].blank?
-          format.html { redirect_to main_app.send(params[:destroy_redirect_path], @article), notice: 'Article deleted.' }
+          format.html { redirect_to main_app.send(params[:destroy_redirect_path]), notice: 'Article deleted.' }
         else
           format.html { redirect_to main_app.send(params[:destroy_redirect_path], eval(params[:destroy_redirect_variable])), notice: 'Article deleted.' }
         end
