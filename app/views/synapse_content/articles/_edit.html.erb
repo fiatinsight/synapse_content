@@ -10,8 +10,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-8 py-3">
-        <%= f.input :title, label: false, placeholder: "Title (required)", input_html: { data: { action: "change->autosave#save keyup->autosave#save" }} %>
+      <div class="col-lg-8 py-3" data-controller="auto-grow-textarea">
+        <%= f.input :title, as: :text, label: false, placeholder: "Title (required)", input_html: { rows: 1, data: { action: "change->autosave#save keyup->autosave#save input->auto-grow-textarea#resize", target: "auto-grow-textarea.input" }} %>
         <%= f.input :slug, label: false, placeholder: "article-slug", input_html: { data: { action: "change->autosave#save keyup->autosave#save" }} %>
       </div>
       <div class="col-lg-4">
