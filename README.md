@@ -98,8 +98,8 @@ locals = {
   nested_parent_id: nil, # Can be deprecated?
   publisher_type: nil,
   publisher_id: nil,
-  destroy_redirect_path: 'example_path',
-  destroy_redirect_variable: 'Current.organization' # Optional; set to `nil` for @article
+  destroy_redirect_path: 'publisher_path',
+  destroy_redirect_variable: SynapseContent::Article.find(params[:id]).publisher.id # Optional
   }
 
 = render partial: 'synapse_content/articles/edit', locals: locals
@@ -107,9 +107,7 @@ locals = {
 
 ### Content blocks
 
-Content blocks are granular elements used to build pages and articles. By default, the `Page` and `Article` classes in this gem use `has_many` polymorphic associations for content blocks as `publishable`.
-
-You can also extend a similar relationship to any model(s) in your main app. For example:
+Content blocks are granular elements used to build pages and articles. By default, the `Page` and `Article` classes in this gem use `has_many` polymorphic associations for content blocks as `publishable`. You can also extend a similar relationship to any model(s) in your main app. For example:
 
 ```ruby
 class MyPage < ApplicationRecord
@@ -264,14 +262,6 @@ namespace :account do
   resources :articles
 end
 ```
-
-You'll also need to add variables to your initializer file to tell the gem how to handle redirects for different content types. For example, with the `account` namespace, you might set:
-
-```ruby
-SynapseContent.configuration.new_content_block_redirect_path = "account_content_block_path"
-```
-
-The gem will provide arguments for your paths based on the resource type. But it can't pick up the namespace conventions you set in your main app without a little help.
 
 ## Development
 

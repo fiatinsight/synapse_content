@@ -5,7 +5,7 @@
       <div class="col-lg-8">
         <% if action_name == "edit" %>
           <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-3 mr-3" do %><i class="far fa-check mr-2"></i>Save article<% end %>
-          <%= link_to send("#{SynapseContent.configuration.view_article_path}"), target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>View article<% end %>
+          <%= link_to "#{view_article_path}", target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>View article<% end %>
         <% end %>
       </div>
     </div>
@@ -15,8 +15,8 @@
         <%= f.input :slug, label: false, placeholder: "article-slug", input_html: { data: { action: "change->autosave#save keyup->autosave#save" }} %>
       </div>
       <div class="col-lg-4">
-        <p class="desc"><i class="fas fa-quote-left mr-2"></i>Add a short excerpt</p>
-        <%= f.input :excerpt, label: false, placeholder: "A short description (10 to 20 words)", input_html: { data: { action: "change->autosave#save keyup->autosave#save" }} %>
+        <p class="desc"><i class="fas fa-quote-left text-gray mr-2"></i>Write a short excerpt</p>
+        <%= f.input :excerpt, label: false, placeholder: "A short description (10 to 20 words)", input_html: { rows: 4, data: { action: "change->autosave#save keyup->autosave#save" }} %>
       </div>
     </div>
   <% end %>
@@ -53,7 +53,7 @@
           <% end %>
         </div>
       </div>
-      <p class="desc"><i class="far fa-camera-retro mr-2"></i>Include a featured image</p>
+      <p class="desc"><i class="far fa-camera-retro text-gray mr-2"></i>Include a featured image</p>
       <% if article.image.attached? %>
         <%= simple_form_for article, url: article_update_url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
           <%= f.input :image_placement, collection: SynapseContent::Article.image_placements.keys.map { |w| [w.humanize, w] }, input_html: { data: { action: "change->autosave#save keyup->autosave#save" }}, prompt: "Select placement" %>
@@ -62,7 +62,7 @@
         <%= simple_form_for article, url: article_update_url do |f| %>
           <%= image_tag article.image.variant(resize: "500x500"), width: "100%", style: "max-width: 500px;", class: "mb-3" %>
           <%= f.input :remove_image, as: :boolean %>
-          <%= f.button :button, type: :submit, class: "btn btn-danger remove-image-submit layer-1 mb-5", style: "display: none;" do %><i class="fal fa-check mr-2"></i>Confirm removal<% end %>
+          <%= f.button :button, type: :submit, class: "btn btn-primary remove-image-submit layer-1 mb-5", style: "display: none;" do %><i class="fal fa-check mr-2"></i>Confirm removal<% end %>
           <script>
             $(document).ready(function(){
               $('#article_remove_image').change(function(){
@@ -87,10 +87,12 @@
           </script>
         <% end %>
       <% end %>
-      <div class="mb-5">
-        <p class="desc"><i class="far fa-tags mr-2"></i>Include categories</p>
-        <%= render partial: 'synapse_content/content_labels/checklist', locals: { labels: SynapseContent::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).order("name ASC").all, assignable: article } %>
-      </div>
+      <% if SynapseContent::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).any? %>
+        <div class="mb-5">
+          <p class="desc"><i class="far fa-tags mr-2"></i>Include categories</p>
+          <%= render partial: 'synapse_content/content_labels/checklist', locals: { labels: SynapseContent::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).order("name ASC").all, assignable: article } %>
+        </div>
+      <% end %>
       <div class="mt-5">
         <%= link_to "#{article_update_url}?nested_parent_id=#{nested_parent_id}&destroy_redirect_path=#{destroy_redirect_path}&destroy_redirect_variable=#{destroy_redirect_variable}", method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-danger layer-1" do %>
           <i class="far fa-trash mr-2"></i>Delete this article
