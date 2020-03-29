@@ -20,7 +20,7 @@
       </div>
       <div class="col-lg-4">
         <p class="desc"><i class="fas fa-quote-left text-gray mr-2"></i>Write a short excerpt</p>
-        <%= f.input :excerpt, label: false, placeholder: "A short description (10 to 20 words)", input_html: { rows: 4, data: { action: "change->autosave#save keyup->autosave#save" }} %>
+        <%= f.input :excerpt, label: false, placeholder: "A short description (10 to 20 words)", input_html: { rows: 3, data: { action: "change->autosave#save keyup->autosave#save" }} %>
       </div>
     </div>
   <% end %>

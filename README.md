@@ -1,6 +1,5 @@
 # Synapse Content
 
-- Add CORS policy to S3 bucket to support direct uploads (doc)
 - Active Storage validator (test)
 - atwho alternative w/ Stimulus? (synapse_ui)
 - drag and drop content blocks (synapse_ui)
@@ -46,6 +45,22 @@ namespace :account do
   mount SynapseContent::Engine => "/content"
   # More routes here...
 end
+```
+
+Since Active Storage direct uploads are default, you'll need to add a permissive CORS policy to your S3 bucket, as well. For example:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<CORSConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+<CORSRule>
+    <AllowedOrigin>*</AllowedOrigin>
+    <AllowedMethod>GET</AllowedMethod>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedMethod>POST</AllowedMethod>
+    <MaxAgeSeconds>3000</MaxAgeSeconds>
+    <AllowedHeader>*</AllowedHeader>
+</CORSRule>
+</CORSConfiguration>
 ```
 
 ## Content types

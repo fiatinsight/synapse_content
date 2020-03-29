@@ -20,9 +20,8 @@ Gem::Specification.new do |s|
   s.add_dependency "simple_form"
   # s.add_dependency "audited", "~> 4.7" # Add this in the future?
   s.add_dependency "recaptcha"
-  s.add_dependency "activestorage-validator" # NOTE: This gem had a Rails 6 compatibility issue but is now reinstated on page and article models.
-  s.add_dependency "jquery-atwho-rails" # This might not really be required...
-  # s.add_dependency "fiat_notificiatons"
+  # s.add_dependency "activestorage-validator" # Add this in the future?
+  # s.add_dependency "jquery-atwho-rails" # This might not really be required...
 
   s.add_development_dependency "sqlite3"
 end
