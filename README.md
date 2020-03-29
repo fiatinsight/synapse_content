@@ -1,8 +1,8 @@
 # Synapse Content
 
-- Active Storage validator (test)
 - atwho alternative w/ Stimulus? (synapse_ui)
 - drag and drop content blocks (synapse_ui)
+- match page edit form to articles improvements
 
 A gem for managing content with [@fiatinsight](https://github.com/fiatinsight/)'s Synapse product.
 
