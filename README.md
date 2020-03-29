@@ -1,7 +1,6 @@
 # Synapse Content
 
 - Add CORS policy to S3 bucket to support direct uploads (doc)
-- Audits (test)
 - Active Storage validator (test)
 - atwho alternative w/ Stimulus? (synapse_ui)
 - drag and drop content blocks (synapse_ui)

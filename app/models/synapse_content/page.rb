@@ -2,8 +2,8 @@ module SynapseContent
   class Page < ApplicationRecord
     include Tokenable
     include Slugable
-    audited
-    has_associated_audits
+    # audited
+    # has_associated_audits
 
     attr_accessor :edit_redirect_path, :edit_redirect_variable, :destroy_redirect_path, :destroy_redirect_variable
 
