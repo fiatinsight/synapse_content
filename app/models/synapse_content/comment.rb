@@ -2,7 +2,7 @@ module SynapseContent
   class Comment < ApplicationRecord
     include Tokenable
     include ActionView::Helpers
-    audited associated_with: :commentable
+    # audited associated_with: :commentable
 
     self.table_name = "synapse_comments"
 
