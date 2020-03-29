@@ -9,7 +9,7 @@ module Slugable
   def create_slug
     if !self.slug? && self.title?
       # Remove non-alphanumeric, except hyphens
-      cleaned_title = self.title.gsub(/[^0-9a-z- ]/i, '')
+      cleaned_title = self.title.gsub(/[^a-z0-9\-._ ]/i, '')
       slug = "#{cleaned_title.split.join('-').downcase}"
       self.update(slug: slug)
     elsif !self.title?
@@ -21,7 +21,7 @@ module Slugable
   def clean_slug
     if self.slug?
       # Remove non-alphanumeric, except hyphens
-      cleaned_slug = self.slug.gsub(/[^0-9a-z- ]/i, '')
+      cleaned_slug = self.slug.gsub(/[^a-z0-9\-._ ]/i, '')
       self.update(slug: cleaned_slug)
     end
   end
