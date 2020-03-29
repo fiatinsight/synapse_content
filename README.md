@@ -1,7 +1,10 @@
 # Synapse Content
 
-- Add direct upload JS / CSS
-- Add CORS policy to S3 bucket to support direct uploads
+- Add CORS policy to S3 bucket to support direct uploads (doc)
+- Audits (test)
+- Active Storage validator (test)
+- atwho alternative w/ Stimulus? (synapse_ui)
+- drag and drop content blocks (synapse_ui)
 
 A gem for managing content with [@fiatinsight](https://github.com/fiatinsight/)'s Synapse product.
 
@@ -46,17 +49,9 @@ namespace :account do
 end
 ```
 
-## Dependencies
-
-The engine supplies minimally formatted output so that you can influence designs within your main application. It includes dependencies for [simple_form](https://github.com/plataformatec/simple_form), [trix-rails](https://github.com/kylefox/trix), [audited](https://github.com/collectiveidea/audited), [recaptcha](https://github.com/ambethia/recaptcha), [meta-tags](https://github.com/kpumuk/meta-tags), and [activestorage-validator](https://github.com/aki77/activestorage-validator). It requires that you've set up [Active Storage](https://edgeguides.rubyonrails.org/active_storage_overview.html#setup) in your main app. It also requires a `Tokenable` concern (i.e., generating a `token` on a create callback) for models to handle tokenization.
-
-It assumes&mdash;but doesn't require&mdash;that you're using Bootstrap and [fiat_ui](https://github.com/fiatinsight/fiat_ui), as well as [fiat_notifications](https://github.com/fiatinsight/fiat_notifications).
-
-> Note: A `User` class is currently required by the `mention_users` method on the `Comment` model. This assumes, too, that `fiat_notifications` is installed, which will eventually be a dependency for this gem.
-
 ## Content types
 
-This engine supplies a variety of content types that can be invoked in custom configurations to do whatever you need. There are some guiding ideas, though, that'll help to implement the available resources better.
+This package supplies a variety of content types that can be invoked in custom configurations to do whatever you need. There are some guiding ideas, though, that'll help to implement the available resources better.
 
 ### Pages and articles
 
@@ -92,6 +87,8 @@ Editing an article or page requires a little more information. Create an `edit.h
 locals = {
   page: SynapseContent::Article.find(params[:id]),
   article_update_url: synapse_content.article_path,
+  view_article_path: SynapseContent::Article.find(params[:id]).pretty_link_extension,
+  preview_article_path: "/articles/#{SynapseContent::Article.find(params[:id]).id}",
   new_content_block_url: synapse_content.new_content_block_path(publishable_type: 'SynapseContent::Page', publishable_id: params[:id]),
   content_block_path: '/publication/content_blocks', # Local
   btn_classes: 'btn btn-success',
