@@ -65,7 +65,7 @@ jobs:
     
     # Run db migration on the test environment
     - name: Migrate database
-      run: rails db:migrate RAILS_NEV=test
+      run: bundle exec rails db:migrate RAILS_NEV=test
 
     # Specifying same bundle path as was previously cached 
     - name: Run tests
