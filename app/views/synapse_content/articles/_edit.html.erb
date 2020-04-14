@@ -16,28 +16,31 @@
         <% if !article.published_at? %><span class="btn btn-link disabled"><i class="fal fa-pencil mr-2"></i>Saved as draft</span><% end %>
       <% end %>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-4 pl-5">
       <% if !article.is_published? %>
         <%= simple_form_for article, url: article_update_url do |f| %>
           <div class="row">
             <div class="col-12">
               <p class="p-2">Select a date to publish this article</p>
             </div>
-            <%= f.input :published_at, html5: true, as: :date, label: false, wrapper_html: { class: 'col-lg-7' }, input_html: { value: Date.today } %>
-            <div class="col-lg-5">
-              <%= f.button :button, type: :submit, class: "btn btn-success layer-1 btn-block mb-5", data: { confirm: 'Please make sure to save any changes to the article before publishing. Are you sure you are ready?' } do %><i class="fal fa-check mr-2"></i>Publish<% end %>
+            <%= f.input :published_at, html5: true, as: :date, label: false, wrapper_html: { class: 'col-lg-9' }, input_html: { value: Date.today } %>
+            <div class="col-lg-3">
+              <%= f.button :button, type: :submit, class: "btn btn-success layer-1 btn-block mb-5", data: { confirm: 'Please make sure to save any changes to the article before publishing. Are you sure you are ready?' } do %><i class="fal fa-check"></i><% end %>
             </div>
           </div>
         <% end %>
       <% else %>
         <div class="row">
-          <div class="col-lg-7">
-            <p class="px-4 py-3 bg-green"><i class="fal fa-envelope mr-2"></i><%= l article.published_at, format: :date_only %></p>
+          <div class="col-12">
+            <p class="p-2">This article is published</p>
           </div>
-          <div class="col-lg-5">
+          <div class="col-lg-9">
+            <p class="pl-4 py-3 bg-green"><i class="fal fa-calendar mr-2"></i><%= l article.published_at, format: :date_only %></p>
+          </div>
+          <div class="col-lg-3">
             <%= simple_form_for article, url: article_update_url do |f| %>
               <%= f.input :published_at, as: :hidden, input_html: { value: nil }, wrapper_html: { class: 'my-0' } %>
-              <%= f.button :button, type: :submit, class: "btn btn-link btn-block mb-5 py-3", data: { confirm: 'Are you sure you want to unpublish this article?' } do %>Unpublish<% end %>
+              <%= f.button :button, type: :submit, class: "btn btn-link btn-block mb-5 py-3", data: { confirm: 'Are you sure you want to unpublish this article?' } do %><i class="far fa-times"></i><% end %>
             <% end %>
           </div>
         </div>
@@ -45,10 +48,10 @@
     </div>
   </div>
   <div class="row justify-content-end">
-    <div class="col-lg-8 pr-5">
+    <div id="contentBlocks" class="col-lg-8 pr-5" data-controller="drag-content-block">
       <% if article.content_blocks.any? %>
         <% article.content_blocks.order("position ASC").each do |i| %>
-          <div class="sheet py-5 border-bottom">
+          <div class="content-block py-5 border-bottom" data-content-block-id="<%= i.id %>" data-position="<%= i.position %>" data-action="dragstart->drag-content-block#dragstart dragover->drag-content-block#dragover dragenter->drag-content-block#dragenter drop->drag-content-block#drop dragend->drag-content-block#dragend" data-url="/articles/sort_content_blocks">
             <!-- <h3><%#= i.block_type.humanize %> block</h3> -->
             <% content_block = SynapseContent::ContentBlock.find(i.id) %>
             <% content_block_url = "#{content_block_path}/#{content_block.id}" %>

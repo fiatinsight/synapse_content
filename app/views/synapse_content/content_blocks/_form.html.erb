@@ -1,6 +1,9 @@
 <%= simple_form_for content_block, url: url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
   <div class="row">
-    <div class="col-12">
+    <div class="col-1 handle" draggable="true">
+      <i class="fal fa-grip-lines fa-fw"></i>
+    </div>
+    <div class="col-10 fields">
       <%= render partial: 'layouts/synapse_ui/components/autosave-status' %>
       <% if content_block.text? %>
         <%= f.rich_text_area :text_content, placeholder: "Type page content here...", data: { action: "change->autosave#save keyup->autosave#save" } %>
@@ -30,19 +33,8 @@
         <%= f.input :text_content, placeholder: "Add script here...", input_html: { data: { action: "change->autosave#save keyup->autosave#save" }} %>
       <% end %>
     </div>
-    <div class="col-12">
-      <div class="row">
-        <div class="col-lg-2">
-          <%= link_to "Order:", "#", class: 'btn btn-link disabled' %>
-        </div>
-        <%= f.input :position, label: false, collection: 1..100, prompt: "#", wrapper_html: { class: 'col-lg-2' }, input_html: { class: '', data: { action: "change->autosave#save" }} %>
-        <div class="col-lg-4">
-          <span class="text-muted btn btn-link" data-target="autosave.status"></span>
-        </div>
-        <div class="col-lg-4">
-          <%= link_to url, method: :delete, data: { confirm: "Are you sure you want to remove this block and its content?" }, class: 'btn btn-link', style: 'float: right;' do %><i class="far fa-ban"></i><% end %>
-        </div>
-      </div>
+    <div class="col-1">
+      <%= link_to url, method: :delete, data: { confirm: "Are you sure you want to remove this block and its content?" } do %><i class="fal fa-times fa-fw"></i><% end %>
     </div>
   </div>
 <% end %>

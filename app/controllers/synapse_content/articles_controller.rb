@@ -57,6 +57,14 @@ module SynapseContent
       end
     end
 
+    def sort_content_blocks
+      params[:new_positions].each_with_index do |id, index|
+        ContentBlock.where(id: id).update_all(position: index + 1)
+      end
+
+      head :ok
+    end
+
     private
 
       def set_article
