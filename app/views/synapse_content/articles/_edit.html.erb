@@ -1,31 +1,51 @@
 <div class="container cms editor">
-  <%= simple_form_for article, url: article_update_url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
-    <%= render partial: 'layouts/synapse_ui/components/autosave-status' %>
-    <div class="row">
-      <div class="col-lg-8">
-        <% if action_name == "edit" %>
-          <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-3 mr-3" do %><i class="far fa-check mr-2"></i>Save article<% end %>
-          <% if article.is_published? %>
-            <%= link_to "#{view_article_path}", target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>View article<% end %>
-          <% else %>
-            <%= link_to "#{preview_article_path}", target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>Preview article<% end %>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-8 py-3" data-controller="auto-grow-textarea">
-        <%= f.input :title, as: :text, label: false, placeholder: "Title (required)", input_html: { rows: 1, data: { action: "change->autosave#save keyup->autosave#save input->auto-grow-textarea#resize", target: "auto-grow-textarea.input" }} %>
-        <%= f.input :slug, label: false, placeholder: "article-slug", input_html: { data: { action: "change->autosave#save keyup->autosave#save" }} %>
-      </div>
-      <div class="col-lg-4">
-        <p class="desc"><i class="fas fa-quote-left text-gray mr-2"></i>Write a short excerpt</p>
-        <%= f.input :excerpt, label: false, placeholder: "A short description (10 to 20 words)", input_html: { rows: 3, data: { action: "change->autosave#save keyup->autosave#save" }} %>
-      </div>
-    </div>
-  <% end %>
-  <div class="row justify-content-end">
+  <div class="row">
     <div class="col-lg-8">
+      <% if article.is_published? %>
+        <%= link_to "#{view_article_path}", target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>View article<% end %>
+      <% else %>
+        <%= link_to "#{preview_article_path}", target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>Preview article<% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 py-3" data-controller="auto-grow-textarea">
+      <%= simple_form_for article, url: article_update_url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
+        <%= render partial: 'layouts/synapse_ui/components/autosave-status' %>
+        <%= f.input :title, as: :text, label: false, placeholder: "Title (required)", input_html: { rows: 1, data: { action: "change->autosave#save keyup->autosave#save input->auto-grow-textarea#resize", target: "auto-grow-textarea.input" }} %>
+        <% if !article.published_at? %><span class="btn btn-link disabled"><i class="fal fa-pencil mr-2"></i>Saved as draft</span><% end %>
+      <% end %>
+    </div>
+    <div class="col-lg-4">
+      <% if !article.is_published? %>
+        <%= simple_form_for article, url: article_update_url do |f| %>
+          <div class="row">
+            <div class="col-12">
+              <p class="p-2">Select a date to publish this article</p>
+            </div>
+            <%= f.input :published_at, html5: true, as: :date, label: false, wrapper_html: { class: 'col-lg-7' }, input_html: { value: Date.today } %>
+            <div class="col-lg-5">
+              <%= f.button :button, type: :submit, class: "btn btn-success layer-1 btn-block mb-5", data: { confirm: 'Please make sure to save any changes to the article before publishing. Are you sure you are ready?' } do %><i class="fal fa-check mr-2"></i>Publish<% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="row">
+          <div class="col-lg-7">
+            <p class="px-4 py-3 bg-green"><i class="fal fa-envelope mr-2"></i><%= l article.published_at, format: :date_only %></p>
+          </div>
+          <div class="col-lg-5">
+            <%= simple_form_for article, url: article_update_url do |f| %>
+              <%= f.input :published_at, as: :hidden, input_html: { value: nil }, wrapper_html: { class: 'my-0' } %>
+              <%= f.button :button, type: :submit, class: "btn btn-link btn-block mb-5 py-3", data: { confirm: 'Are you sure you want to unpublish this article?' } do %>Unpublish<% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-lg-8 pr-5">
       <% if article.content_blocks.any? %>
         <% article.content_blocks.order("position ASC").each do |i| %>
           <div class="sheet py-5 border-bottom">
@@ -37,31 +57,19 @@
         <% end %>
       <% end %>
       <div class="mt-4">
-        <%= link_to new_content_block_url, remote: true, class: 'btn btn-secondary layer-1' do %><i class="far fa-plus mr-2"></i>Add content block<% end %>
+        <%= link_to new_content_block_url, remote: true, class: 'btn btn-link' do %><i class="far fa-plus mr-2"></i>Add more content<% end %>
       </div>
     </div>
-    <div class="col-lg-4 my-2 pb-5 pl-3">
-      <div class="row">
-        <div class="col-12">
-          <% if !article.is_published? %>
-            <%= simple_form_for article, url: article_update_url do |f| %>
-              <%= f.input :published_at, html5: true, as: :date, label: "Select a publication date", input_html: { value: Date.today } %>
-              <%= f.button :button, type: :submit, class: "btn btn-success layer-1 mb-5", data: { confirm: 'Please make sure to save any changes to the article before publishing. Are you sure you are ready?' } do %><i class="far fa-envelope mr-2"></i>Publish this article<% end %>
-            <% end %>
-          <% else %>
-            <p class="desc bg-green"><i class="far fa-envelope mr-2"></i>Published on <%= l article.published_at, format: :date_only %></p>
-            <%= simple_form_for article, url: article_update_url do |f| %>
-              <%= f.input :published_at, as: :hidden, input_html: { value: nil }, wrapper_html: { class: 'my-0' } %>
-              <%= f.button :button, type: :submit, class: "btn btn-link mb-5", data: { confirm: 'Are you sure you want to unpublish this article?' } do %><i class="far fa-times mr-2"></i>Unpublish this article<% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-      <p class="desc"><i class="far fa-camera-retro text-gray mr-2"></i>Include a featured image</p>
+    <div class="col-lg-4 my-2 pb-5 pl-5 border-left">
+      <%= simple_form_for article, url: article_update_url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
+        <%= render partial: 'layouts/synapse_ui/components/autosave-status' %>
+        <%= f.input :excerpt, label: false, placeholder: "Add a short excerpt (10 to 20 words)", input_html: { rows: 3, data: { action: "change->autosave#save keyup->autosave#save" }}, wrapper_html: { class: 'mt-4' }, hint: "A short snippet of your article for sharing" %>
+        <%= f.input :slug, label: false, placeholder: "article-slug", hint: "This slug will show up in your article URL", input_html: { data: { action: "change->autosave#save keyup->autosave#save" }}, wrapper_html: { class: 'my-5' } %>
+      <% end %>
       <% if article.image.attached? %>
         <%= simple_form_for article, url: article_update_url, remote: true, data: { controller: "autosave", target: "autosave.form", action: "ajax:success->autosave#success ajax:error->autosave#error" } do |f| %>
+          <%= render partial: 'layouts/synapse_ui/components/autosave-status' %>
           <%= f.input :image_placement, collection: SynapseContent::Article.image_placements.keys.map { |w| [w.humanize, w] }, input_html: { data: { action: "change->autosave#save keyup->autosave#save" }}, prompt: "Select placement" %>
-          <span class="text-muted btn mb-3 mr-3" data-target="autosave.status"></span>
         <% end %>
         <%= simple_form_for article, url: article_update_url do |f| %>
           <%= image_tag article.image.variant(resize: "500x500"), width: "100%", style: "max-width: 500px;", class: "mb-3" %>
@@ -80,7 +88,7 @@
         <% end %>
       <% else %>
         <%= simple_form_for article, url: article_update_url do |f| %>
-          <%= f.input :image, as: :file, label: "Upload image", hint: "At least 1500 x 800 pixels.", input_html: { direct_upload: true } %>
+          <%= f.input :image, as: :file, label: "Featured image", hint: "At least 1500 x 800 pixels.", input_html: { direct_upload: true } %>
           <%= f.button :button, type: :submit, class: "btn btn-primary layer-1 mb-5 upload-image-submit", style: "display: none;" do %><i class="far fa-cloud-upload mr-2"></i>Upload image<% end %>
           <script>
             $(document).ready(function(){

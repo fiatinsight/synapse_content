@@ -34,6 +34,7 @@ module SynapseContent
     scope :visible, lambda { where("published_at <= ?", DateTime.now) }
 
     after_save :purge_image, if: :remove_image
+    after_commit :add_text_content_block, on: :create
 
     def purge_image
       image.purge
@@ -45,6 +46,10 @@ module SynapseContent
       else
         false
       end
+    end
+
+    def add_text_content_block
+      ContentBlock.create(publishable_type: "SynapseContent::Article", publishable_id: self.id, block_type: :text)
     end
   end
 end
