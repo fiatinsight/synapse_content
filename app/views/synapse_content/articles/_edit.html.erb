@@ -1,10 +1,40 @@
 <div class="container cms editor">
   <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-3">
       <% if article.is_published? %>
         <%= link_to "#{view_article_path}", target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>View article<% end %>
       <% else %>
         <%= link_to "#{preview_article_path}", target: "_blank", class: "btn btn-link mb-3 mr-3" do %><i class="far fa-external-link mr-2"></i>Preview article<% end %>
+      <% end %>
+    </div>
+    <div class="col-lg-9">
+      <% if !article.is_published? %>
+        <%= simple_form_for article, url: article_update_url do |f| %>
+          <div class="row">
+            <div class="col-lg-5">
+              <p class="p-2 text-right">Select a date to publish this article:</p>
+            </div>
+            <%= f.input :published_at, html5: true, as: :date, label: false, wrapper_html: { class: 'col-lg-4' }, input_html: { value: Date.today } %>
+            <div class="col-lg-3">
+              <%= f.button :button, type: :submit, class: "btn btn-success layer-1 btn-block mb-5", data: { confirm: 'Please make sure to save any changes to the article before publishing. Are you sure you are ready?' } do %>Publish<% end %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="row">
+          <div class="col-lg-5">
+            <p class="p-2 text-right">This article is published:</p>
+          </div>
+          <div class="col-lg-4">
+            <p class="px-4 py-2 bg-light-gray"><i class="fal fa-calendar mr-2"></i><%= l article.published_at, format: :date_only %></p>
+          </div>
+          <div class="col-lg-3">
+            <%= simple_form_for article, url: article_update_url do |f| %>
+              <%= f.input :published_at, as: :hidden, input_html: { value: nil }, wrapper_html: { class: 'my-0' } %>
+              <%= f.button :button, type: :submit, class: "btn btn-secondary btn-block layer-1", data: { confirm: 'Are you sure you want to unpublish this article?' } do %>Unpublish<% end %>
+            <% end %>
+          </div>
+        </div>
       <% end %>
     </div>
   </div>
@@ -17,34 +47,7 @@
       <% end %>
     </div>
     <div class="col-lg-4 pl-5">
-      <% if !article.is_published? %>
-        <%= simple_form_for article, url: article_update_url do |f| %>
-          <div class="row">
-            <div class="col-12">
-              <p class="p-2">Select a date to publish this article</p>
-            </div>
-            <%= f.input :published_at, html5: true, as: :date, label: false, wrapper_html: { class: 'col-lg-9' }, input_html: { value: Date.today } %>
-            <div class="col-lg-3">
-              <%= f.button :button, type: :submit, class: "btn btn-success layer-1 btn-block mb-5", data: { confirm: 'Please make sure to save any changes to the article before publishing. Are you sure you are ready?' } do %><i class="fal fa-check"></i><% end %>
-            </div>
-          </div>
-        <% end %>
-      <% else %>
-        <div class="row">
-          <div class="col-12">
-            <p class="p-2">This article is published</p>
-          </div>
-          <div class="col-lg-9">
-            <p class="pl-4 py-3 bg-green"><i class="fal fa-calendar mr-2"></i><%= l article.published_at, format: :date_only %></p>
-          </div>
-          <div class="col-lg-3">
-            <%= simple_form_for article, url: article_update_url do |f| %>
-              <%= f.input :published_at, as: :hidden, input_html: { value: nil }, wrapper_html: { class: 'my-0' } %>
-              <%= f.button :button, type: :submit, class: "btn btn-link btn-block mb-5 py-3", data: { confirm: 'Are you sure you want to unpublish this article?' } do %><i class="far fa-times"></i><% end %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
+
     </div>
   </div>
   <div class="row justify-content-end">
@@ -101,6 +104,7 @@
             });
           </script>
         <% end %>
+        <%= link_to "https://unsplash.com", target: '_blank', class: 'btn btn-link mt-3' do %><i class="far fa-images mr-2"></i>Find images<i class="far fa-long-arrow-right ml-2"></i><% end %>
       <% end %>
       <% if SynapseContent::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).any? %>
         <div class="mb-5">
