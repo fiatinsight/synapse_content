@@ -1,15 +1,15 @@
 <section class="page cms editor">
   <div class="container">
-    <%= simple_form_for article, url: url do |f| %>
+    <%= simple_form_for article, url: url, data: { controller: "button-reveal", target: "button-reveal.form" } do |f| %>
       <%= f.input :publisher_type, as: :hidden, input_html: { value: publisher_type } %>
       <%= f.input :publisher_id, as: :hidden, input_html: { value: publisher_id } %>
       <%= f.input :edit_redirect_path, as: :hidden, input_html: { value: edit_redirect_path } %>
       <%= f.input :edit_redirect_variable, as: :hidden, input_html: { value: edit_redirect_variable } %>
       <%= f.input :image_placement, as: :hidden, input_html: { value: 'billboard' } %>
       <div class="row">
-        <%= f.input :title, label: false, placeholder: "Title (required)", wrapper_html: { class: 'col-12' } %>
+        <%= f.input :title, label: false, placeholder: "Type title...", wrapper_html: { class: 'col-12' }, input_html: { data: { action: "change->button-reveal#reveal keyup->button-reveal#reveal" } } %>
         <div class="col-12">
-          <%= f.button :button, type: :submit, class: btn_classes do %>Create article<% end %>
+          <%= f.button :button, type: :submit, class: btn_classes, style: 'display: none;', data: { target: "button-reveal.button" } do %>Create article<i class="far fa-long-arrow-right ml-2"></i><% end %>
         </div>
       </div>
     <% end %>
