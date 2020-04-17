@@ -54,7 +54,7 @@
     <div id="contentBlocks" class="col-lg-8 pr-5" data-controller="drag-content-block">
       <% if article.content_blocks.any? %>
         <% article.content_blocks.order("position ASC").each do |i| %>
-          <div class="content-block py-5 border-bottom" data-content-block-id="<%= i.id %>" data-position="<%= i.position %>" data-action="dragstart->drag-content-block#dragstart dragover->drag-content-block#dragover dragenter->drag-content-block#dragenter drop->drag-content-block#drop dragend->drag-content-block#dragend" data-url="/articles/sort_content_blocks">
+          <div class="content-block py-5 border-bottom" data-content-block-id="<%= i.id %>" data-position="<%= i.position %>" data-action="dragstart->drag-content-block#dragstart dragover->drag-content-block#dragover dragenter->drag-content-block#dragenter drop->drag-content-block#drop dragend->drag-content-block#dragend" data-url="<%= content_block_sort_path %>" >
             <!-- <h3><%#= i.block_type.humanize %> block</h3> -->
             <% content_block = SynapseContent::ContentBlock.find(i.id) %>
             <% content_block_url = "#{content_block_path}/#{content_block.id}" %>

@@ -1,7 +1,6 @@
 # Synapse Content
 
 - atwho alternative w/ Stimulus? (synapse_ui)
-- drag and drop content blocks (synapse_ui)
 - match page edit form to articles improvements
 
 A gem for managing content with [@fiatinsight](https://github.com/fiatinsight/)'s Synapse product.
@@ -16,21 +15,19 @@ source "https://rubygems.pkg.github.com/fiatinsight" do
 end
 ```
 
-Then `bundle` and run the required migrations directly by typing:
+Then `bundle` and run the required migrations by typing:
 
     $ rake db:migrate
 
-Create an initializer at `config/initializers/synapse_content.rb` to set any required globals for your implementation. You should set any variables that pertain to parts of the gem you'll want to use. Variables give you the chance to pass namespacing into the engine's actions:
+Create an initializer at `config/initializers/synapse_content.rb` to set any required globals for your implementation:
 
 ```ruby
 SynapseContent.configure do |config|
-  config.new_message_redirect_path = "my_namespace_path"
-  config.new_page_path = "my_namespace_path"
-  config.view_page_path = "my_namespace_path"
+  # config.something = "my_namespace_path"
 end
 ```
 
-> Note: For a full list of configuration options, see [here](https://github.com/fiatinsight/synapse_content/blob/master/lib/synapse_content/configuration.rb). *This is being deprecated* in favor of custom redirect paths and variables within form helpers, for example [here](https://github.com/fiatinsight/synapse_content/blob/master/app/views/synapse_content/articles/_new.html.erb).
+> Note: Right now there are no required variables. This is a stub for future implementation.
 
 Then mount the engine in your `routes.rb` file:
 
@@ -43,11 +40,10 @@ You can also mount the engine within a namespace, for example:
 ```ruby
 namespace :account do
   mount SynapseContent::Engine => "/content"
-  # More routes here...
 end
 ```
 
-Since Active Storage direct uploads are default, you'll need to add a permissive CORS policy to your S3 bucket, as well. For example:
+Since Active Storage direct uploads are enabled by default, you'll need to add a permissive CORS policy to your S3 bucket. For example:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -65,13 +61,17 @@ Since Active Storage direct uploads are default, you'll need to add a permissive
 
 ## Content types
 
-This package supplies a variety of content types that can be invoked in custom configurations to do whatever you need. There are some guiding ideas, though, that'll help to implement the available resources better.
+This package supplies a variety of content types that can be invoked in custom configurations to do whatever you need. There are some guiding ideas, though, that'll help in implementing the available resources better.
 
 ### Pages and articles
 
 #### Creating
 
-Pages and articles are basic content types. Pages are intended for more permanent content, and articles are designed to be more transient / ephemeral. You can invoke a new page or article by pointing to:
+Pages and articles are basic content types. Pages are intended for more permanent content, and articles are designed to be more transient / ephemeral.
+
+> Note: All instances of `article(s)` can be substitutes with `page(s)` for the following.
+
+You can invoke a new page or article by pointing to:
 
 ```ruby
 = link_to send("your_new_article_path", publisher_type: nil, publisher_id: nil)
@@ -85,7 +85,7 @@ locals = {
     url: synapse_content.articles_path,
     publisher_type: params[:publisher_type],
     publisher_id: params[:publisher_id],
-    btn_classes: 'btn btn-primary',
+    btn_classes: 'btn btn-primary revealable-button', # `revealable-button` is optional to connect with a synapse_ui Stimulus controller
     edit_redirect_path: 'example_path',
     edit_redirect_variable: 'Current.organization' # Optional; set to `nil` to use @article after create action
     }
@@ -105,6 +105,7 @@ locals = {
   preview_article_path: "/articles/#{SynapseContent::Article.find(params[:id]).id}",
   new_content_block_url: synapse_content.new_content_block_path(publishable_type: 'SynapseContent::Page', publishable_id: params[:id]),
   content_block_path: '/publication/content_blocks', # Local
+  content_block_sort_path: synapse_content.sort_content_blocks_article_path,
   btn_classes: 'btn btn-success',
   nested_parent_id: nil, # Can be deprecated?
   publisher_type: nil,
@@ -127,13 +128,13 @@ class MyPage < ApplicationRecord
 end
 ```
 
-Content blocks also require a `block_type` value that can be set to `text`, `image`, or `buttons`. The type of block determines what fields are made available to utilize. Content blocks with images use Active Storage to store and process image files.
+Content blocks require a `block_type` value that can be set to `text`, `image`, `buttons` or `script`. The type of block determines what fields are made available to utilize. Content blocks with images use Active Storage to store and process image files.
 
-> Note: More block types will be forthcoming.
+> Note: More block types will likely be added.
 
 ### Authors
 
-Authors can be created and associated with articles.
+> Note: This is a stub and not currently enabled.
 
 > TODO: Extend the `Author` class to accommodate more information, and to associate with other main app classes, like `User`.
 
@@ -152,8 +153,6 @@ Messages allow you to add reCaptcha v3 to your message form. The `create` action
 ### Attachments
 
 Attachments are standalone content objects that use Active Storage to store files.
-
-> TODO: This content type is undeveloped. Extrapolating current attachment logic, routing, etc., in conjunction w/ best practice Active Storage use is required. (See [this issue](https://github.com/fiatinsight/synapse_content/issues/6).)
 
 ### Custom fields
 
@@ -273,17 +272,3 @@ namespace :account do
   resources :articles
 end
 ```
-
-## Development
-
-To build this gem for the first time, run `gem build synapse_content.gemspec` from the project folder.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/fiatinsight/synapse_content.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

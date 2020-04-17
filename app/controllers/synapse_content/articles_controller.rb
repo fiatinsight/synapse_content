@@ -1,6 +1,6 @@
 module SynapseContent
   class ArticlesController < ActionController::Base
-    before_action :set_article, only: [:show, :edit, :update, :destroy]
+    before_action :set_article, only: [:show, :edit, :update, :destroy, :sort_content_blocks]
 
     def index
       # @articles = Current.publisher.articles.order("title ASC").all

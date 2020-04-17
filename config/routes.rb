@@ -1,7 +1,7 @@
 SynapseContent::Engine.routes.draw do
   resources :pages
   resources :articles do
-    patch :sort_content_blocks, on: :collection
+    patch :sort_content_blocks, on: :member
   end
   resources :content_blocks
   resources :authors
