@@ -106,12 +106,6 @@
         <% end %>
         <%= link_to "https://unsplash.com", target: '_blank', class: 'btn btn-link mt-3' do %><i class="far fa-images mr-2"></i>Find images<i class="far fa-long-arrow-right ml-2"></i><% end %>
       <% end %>
-      <% if SynapseContent::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).any? %>
-        <div class="mb-5">
-          <p class="desc"><i class="far fa-tags mr-2"></i>Include categories</p>
-          <%= render partial: 'synapse_content/content_labels/checklist', locals: { labels: SynapseContent::ContentLabel.where(publisher_type: publisher_type, publisher_id: publisher_id).order("name ASC").all, assignable: article } %>
-        </div>
-      <% end %>
       <div class="mt-5 border-top">
         <%= link_to "#{article_update_url}?nested_parent_id=#{nested_parent_id}&destroy_redirect_path=#{destroy_redirect_path}&destroy_redirect_variable=#{destroy_redirect_variable}", method: :delete, data: { confirm: 'Are you sure? This cannot be undone. Click to confirm.' }, class: "btn btn-link text-red mt-4" do %><i class="far fa-times mr-2"></i>Delete this article<% end %>
       </div>
